@@ -16,7 +16,7 @@ hbase:
     namespace: 'hbase_test'
     zookeeper_quorum:  ['localhost']
     hive_imports:
-        tables: ['sometable']
+        tables: ['test_hbase']
 
 mysql_failover:
      pgtid:

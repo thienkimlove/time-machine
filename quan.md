@@ -133,3 +133,12 @@ Build `mvn package`
 [INFO] Final Memory: 70M/650M
 [INFO] ------------------------------------------------------------------------
 ```
+We make change abit in Java Source and Test to allow mysql from other port than 3306.
+
+**Enable HBase Snapshot**
+```
+<property>
+    <name>hbase.snapshot.enabled</name>
+    <value>true</value>
+  </property>
+```
