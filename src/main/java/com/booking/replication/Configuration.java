@@ -350,7 +350,7 @@ public class Configuration {
     // =========================================================================
     // Replication schema config getters
     public int getReplicantPort() {
-        return Integer.parseInt(replication_schema.port);
+        return replication_schema.port;
     }
 
     public List<String> getReplicantDBHostPool() {
