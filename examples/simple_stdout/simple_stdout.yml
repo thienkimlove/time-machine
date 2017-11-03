@@ -3,7 +3,7 @@ replication_schema:
     username:  'root'
     password:  'tieungao'
     host_pool: ['103.7.41.141']
-    port: 33061
+    port: '33061'
 
 metadata_store:
     username: 'root'
