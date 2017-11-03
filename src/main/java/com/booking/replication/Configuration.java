@@ -43,7 +43,7 @@ public class Configuration {
         public String       username;
         public String       password;
         public List<String> host_pool;
-        public int          port        = 3306;
+        public int          port;
     }
 
 

@@ -26,7 +26,7 @@ vi /opt/Docker/slavedb/cnf/config-file.cnf
 ## Config Settings:
 #[mysqld]
 #server-id=2
-
+#log-bin
 
 # Launch master instance
 docker run --name masterdb -v /opt/Docker/masterdb/cnf:/etc/mysql/conf.d -v /opt/Docker/masterdb/data:/var/lib/mysql -p 33060:3306 -e MYSQL_ROOT_PASSWORD=tieungao -d percona:5.7
@@ -113,4 +113,8 @@ hbase.zookeeper.quorum
 
 Flushes MySQL database tables to the binlog in order to have the initial snapshot of the database in the binlog.
 
-``
+Run command `python data-flusher.py --host=103.7.41.141 --user=root --passwd=tieungao --port=33061` to flush bin log for this slave server.
+
+5. MySQL Replicator
+
+Replicates data changes from MySQL binlog to HBase or Kafka. In case of HBase, preserves the previous data versions. HBase storage is intended for auditing purposes of historical data. In addition, special daily-changes tables can be maintained in HBase, which are convenient for fast and cheap imports from HBase to Hive. Replication to Kafka is intended for easy real-time access to a stream of data changes.

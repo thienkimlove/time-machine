@@ -3,6 +3,7 @@ replication_schema:
     username:  '__USER__'
     password:  '__PASSWORD__'
     host_pool: ['localhost']
+    port: 3306
 
 metadata_store:
     username: '__USER__'
