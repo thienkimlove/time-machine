@@ -43,7 +43,7 @@ public class PipelineOrchestratorTest {
 
     private static ReplicatorQueues replicatorQueues = new ReplicatorQueues();
     private static BlockingQueue<BinlogEventV4> queue = new LinkedBlockingQueue<>();
-    private static PipelinePosition pipelinePosition = new PipelinePosition("localhost", 12345, "binlog.000001", 4L, "binlog.000001", 4L);
+    private static PipelinePosition pipelinePosition = new PipelinePosition("localhost:3306", 12345, "binlog.000001", 4L, "binlog.000001", 4L);
     private static Configuration configuration;
     private static Applier applier = new DummyApplier();
     private static ReplicantPool replicantPool = new DummyReplicantPool();
