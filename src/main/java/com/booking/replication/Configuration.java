@@ -43,7 +43,7 @@ public class Configuration {
         public String       username;
         public String       password;
         public List<String> host_pool;
-        public int          port;
+        public String       port;
     }
 
 
@@ -350,7 +350,7 @@ public class Configuration {
     // =========================================================================
     // Replication schema config getters
     public int getReplicantPort() {
-        return replication_schema.port;
+        return Integer.parseInt(replication_schema.port);
     }
 
     public List<String> getReplicantDBHostPool() {
