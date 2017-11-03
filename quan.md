@@ -146,3 +146,10 @@ We make change abit in Java Source and Test to allow mysql from other port than 
 ```
 java -jar ../../target/mysql-replicator-0.14.2.jar     --hbase-namespace ns     --applier hbase   --config-path  ./hbase_dryrun.yml     --delta
 ```
+
+Change mysql bin log to `log_format=ROW` and we test with
+```
+java -jar ../../target/mysql-replicator-0.14.2.jar     --applier STDOUT     --schema test     --binlog-filename mysql-bin.000001     --config-path  ./simple_stdout.yml
+```
+
+Currently we have problem with write to HBase table.
