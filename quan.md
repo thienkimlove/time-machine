@@ -142,3 +142,7 @@ We make change abit in Java Source and Test to allow mysql from other port than 
     <value>true</value>
   </property>
 ```
+
+```
+java -jar ../../target/mysql-replicator-0.14.2.jar     --hbase-namespace ns     --applier hbase   --config-path  ./hbase_dryrun.yml     --delta
+```

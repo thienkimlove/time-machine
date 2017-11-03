@@ -226,6 +226,7 @@ public class HBaseApplier implements Applier {
             // replaying the binlog.
             // TODO: load hbase tables on start-up so this never happens
             hbaseSchemaManager.createMirroredTableIfNotExists(hbaseTableName, DEFAULT_VERSIONS_FOR_MIRRORED_TABLES);
+            LOGGER.info("quan-debug:createMirroredTableIfNotExists" + hbaseTableName);
         }
 
         if (configuration.isWriteRecentChangesToDeltaTables()) {
@@ -245,6 +246,7 @@ public class HBaseApplier implements Applier {
                 if (! hbaseSchemaManager.isTableKnownToHBase(deltaTableName)) {
                     boolean isInitialSnapshotMode = configuration.isInitialSnapshotMode();
                     hbaseSchemaManager.createDeltaTableIfNotExists(deltaTableName, isInitialSnapshotMode);
+                    LOGGER.info("quan-debug:createDeltaTableIfNotExists" + deltaTableName);
                 }
             }
         }
