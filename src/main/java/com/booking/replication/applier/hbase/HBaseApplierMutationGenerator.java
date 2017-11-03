@@ -118,7 +118,7 @@ public class HBaseApplierMutationGenerator {
         String hbaseRowID = getHBaseRowKey(row);
 
         String hbaseTableName =
-                configuration.getHbaseNamespace() + ":" + row.getTableName().toLowerCase();
+                configuration.getHbaseNamespace() + "_" + row.getTableName().toLowerCase();
 
         Put put = new Put(Bytes.toBytes(hbaseRowID));
 
