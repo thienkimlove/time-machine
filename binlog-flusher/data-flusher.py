@@ -473,8 +473,8 @@ def run(user, passwd, host, port, db, table, method, stop_slave, start_slave, sk
 if __name__ == '__main__':
     logger = logging.getLogger('dataFlusher')
     curTime = datetime.now()
-    hdlr = logging.FileHandler('dataFlusher-%s.log' % curTime)
-    hashmapFileName = 'flusherHash-%s.txt' % curTime
+    hdlr = logging.FileHandler('tmp/dataFlusher-%s.log' % curTime)
+    hashmapFileName = 'tmp/flusherHash-%s.txt' % curTime
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
     hdlr.setFormatter(formatter)
     logger.addHandler(hdlr)
