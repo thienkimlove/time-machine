@@ -1,14 +1,11 @@
 #!/usr/bin/env python
 
-import click
-from datetime import datetime
-import logging
 import MySQLdb
 import MySQLdb.cursors
+import click
+import logging
 import sys
-import signal
-from time import sleep
-from operator import itemgetter
+from datetime import datetime
 
 
 class Cursor(MySQLdb.cursors.CursorStoreResultMixIn, MySQLdb.cursors.CursorTupleRowsMixIn, MySQLdb.cursors.BaseCursor):

@@ -1,7 +1,6 @@
 package com.booking.replication.monitor;
 
 import com.booking.replication.pipeline.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

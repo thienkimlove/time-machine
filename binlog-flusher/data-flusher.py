@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 
-import click
-from datetime import datetime
-import logging
 import MySQLdb
 import MySQLdb.cursors
-import sys
 import Queue
-import threading
-from threading import Thread
+import click
+import logging
 import signal
+import sys
+import threading
+from datetime import datetime
+from threading import Thread
 from time import sleep
-from operator import itemgetter
+
 
 class Cursor(MySQLdb.cursors.CursorStoreResultMixIn, MySQLdb.cursors.CursorTupleRowsMixIn, MySQLdb.cursors.BaseCursor):
     pass
@@ -65,7 +65,7 @@ class ConnectionDispatch(Thread):
             logger.info(self.config['port'])
             try:
                 logger.info("attempt %d" % retry)
-                src = MySQLdb.connect(host="103.7.41.141",user="root",passwd="tieungao",cursorclass=Cursor,port=33061)
+                src = MySQLdb.connect(host=self.config['hort'],user=self.config['user'],passwd=self.config['passwd'],cursorclass=Cursor,port=self.config['port'])
                 self._add_id(src.thread_id())
                 return src
             except Exception as e:
@@ -90,7 +90,7 @@ class ConnectionDispatch(Thread):
             pass
         # We create another MySQL connection to kill all the process
         logger.info("Terminating all connections")
-        hc_killer = MySQLdb.connect(host="103.7.41.141",user="root",passwd="tieungao",cursorclass=Cursor,port=33061)
+        hc_killer = MySQLdb.connect(host=self.config['hort'],user=self.config['user'],passwd=self.config['passwd'],cursorclass=Cursor,port=self.config['port'])
         hc_cursor = hc_killer.cursor()
         for tid in self.connection_ids:
             logger.info("Killing thread id: {}".format(tid))
@@ -418,19 +418,25 @@ class DataFlusher(object):
 
 
 @click.command()
+@click.option('--user', help='Mysql Username')
+@click.option('--passwd', help='Mysql Password')
+@click.option('--host', help='Mysql Hostname')
+@click.option('--port', help='Mysql Port')
 @click.option('--db', required=False, help='comma separated list of databases to copy. Leave blank for all databases')
 @click.option('--table', required=False, help='comma separated list of tables to copy. Leave blank for all tables')
-@click.option('--stop-slave/--no-stop-slave', default=True, help='stop the replication thread whilst running the copy')
-@click.option('--start-slave/--no-start-slave', default=False, help='restart the replication thread after running the copy')
 @click.option('--method', default='BlackholeCopy', help='Copy method class')
-@click.option('--host', help='Host name')
-@click.option('--port', help='Host name')
+@click.option('--stop-slave/--no-stop-slave', default=True, help='stop the replication thread whilst running the copy')
+@click.option('--start-slave/--no-start-slave', default=True, help='restart the replication thread after running the copy')
 @click.option('--skip', required=False, help='comma separated list of skip schemas')
-def run(db, table, stop_slave, start_slave, method, host, port, skip):
+def run(user, passwd, host, port, db, table, method, stop_slave, start_slave, skip):
     flusher = DataFlusher()
     config = {
         'skip': ['sys', 'mysql', 'information_schema', 'performance_schema']
     }
+    if user:
+        config['user'] = user
+    if passwd:
+        config['passwd'] = passwd
     if host:
         config['host'] = host
     if port:

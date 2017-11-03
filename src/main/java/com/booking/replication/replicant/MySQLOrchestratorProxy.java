@@ -1,11 +1,9 @@
 package com.booking.replication.replicant;
 
-import com.google.common.net.UrlEscapers;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
+import com.google.common.net.UrlEscapers;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.UsernamePasswordCredentials;
