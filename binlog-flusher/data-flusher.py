@@ -65,7 +65,7 @@ class ConnectionDispatch(Thread):
             logger.info(self.config['port'])
             try:
                 logger.info("attempt %d" % retry)
-                src = MySQLdb.connect(host=self.config['host'],user=self.config['user'],passwd=self.config['passwd'],cursorclass=Cursor,port=self.config['port'])
+                src = MySQLdb.connect(host=self.config['host'],user=self.config['user'],passwd=self.config['passwd'],cursorclass=Cursor,port=int(self.config['port']))
                 self._add_id(src.thread_id())
                 return src
             except Exception as e:
@@ -90,7 +90,7 @@ class ConnectionDispatch(Thread):
             pass
         # We create another MySQL connection to kill all the process
         logger.info("Terminating all connections")
-        hc_killer = MySQLdb.connect(host=self.config['host'],user=self.config['user'],passwd=self.config['passwd'],cursorclass=Cursor,port=self.config['port'])
+        hc_killer = MySQLdb.connect(host=self.config['host'],user=self.config['user'],passwd=self.config['passwd'],cursorclass=Cursor,port=int(self.config['port']))
         hc_cursor = hc_killer.cursor()
         for tid in self.connection_ids:
             logger.info("Killing thread id: {}".format(tid))
