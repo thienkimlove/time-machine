@@ -67,6 +67,7 @@ public class QueryEventHandler implements BinlogEventV4Handler {
             case DDLTABLE:
                 // Sync all the things here.
                 eventHandlerConfiguration.getApplier().forceFlush();
+                LOGGER.info("quan-debug:eventHandlerConfiguration.getApplier().forceFlush");
                 eventHandlerConfiguration.getApplier().waitUntilAllRowsAreCommitted(event);
 
                 try {

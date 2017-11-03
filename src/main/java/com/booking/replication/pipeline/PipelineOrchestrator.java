@@ -351,6 +351,7 @@ public class PipelineOrchestrator extends Thread {
                 boolean forceFlush = (timeDiff > BUFFER_FLUSH_INTERVAL);
                 if (forceFlush) {
                     applier.forceFlush();
+                    LOGGER.info("quan-debug:applier.forceFlush");
                 }
             }
         }
