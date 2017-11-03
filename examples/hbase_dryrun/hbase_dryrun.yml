@@ -1,24 +1,24 @@
 replication_schema:
-    name:      'test'
-    username:  '__USER__'
-    password:  '__PASSWORD__'
-    host_pool: ['localhost']
+   name:      'test'
+   username:  'root'
+   password:  'tieungao'
+   host_pool: ['103.7.41.141:33061']
 
 metadata_store:
-    username: '__USER__'
-    password: '__PASWORD__'
+    username: 'root'
+    password: 'tieungao'
     host:     'localhost'
     database: 'test_active_schema'
     file:
-        path: '__REPLICATOR_METADATA_FILE_PATH__'
+       path: '/tmp/replication_metadata_path.txt'
 
 hbase:
-    namespace: 'schema_namespace'
-    zookeeper_quorum:  ['hbase-zk1-host', 'hbase-zkN-host']
+    namespace: 'hbase_test'
+    zookeeper_quorum:  ['localhost']
     hive_imports:
         tables: ['sometable']
 
 mysql_failover:
      pgtid:
          p_gtid_pattern: '(?<=_pseudo_gtid_hint__asc\:)(.{8}\:.{16}\:.{8})'
-         p_gtid_prefix: "use `__META_DB_NAME__`;"
+         p_gtid_prefix: "use `test_active_schema`;"
