@@ -71,12 +71,12 @@ public class BinlogEventProducer {
     private OpenReplicator initOpenReplicator() {
         OpenReplicator openReplicator = new OpenReplicator();
 
-        String[] hostParse = pipelinePosition.getCurrentReplicantHostName().split(":");
+        String[] hostParse = pipelinePosition.getCurrentReplicantHostName().split("\\:");
 
         // config
         openReplicator.setUser(configuration.getReplicantDBUserName());
         openReplicator.setPassword(configuration.getReplicantDBPassword());
-        openReplicator.setPort(Integer.ParseInt(hostParse[1]));
+        openReplicator.setPort(Integer.parseInt(hostParse[1]));
 
         // pool
         openReplicator.setHost(hostParse[0]);
