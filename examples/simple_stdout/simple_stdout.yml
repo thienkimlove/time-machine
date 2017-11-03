@@ -1,19 +1,19 @@
 replication_schema:
     name:      'test'
-    username:  '__USER__'
-    password:  '__PASSWORD__'
-    host_pool: ['localhost']
-    port: 3306
+    username:  'root'
+    password:  'tieungao'
+    host_pool: ['103.7.41.141']
+    port: 33061
 
 metadata_store:
-    username: '__USER__'
-    password: '__PASSWORD__'
+    username: 'root'
+    password: 'tieungao'
     host:     'localhost'
     database: 'test_active_schema'
     file:
-        path: '__REPLICATOR_METADATA_FILE_PATH__'
+        path: '/tmp/replication_metadata_path.txt'
 
 mysql_failover:
     pgtid:
         p_gtid_pattern: '(?<=_pseudo_gtid_hint__asc\:)(.{8}\:.{16}\:.{8})'
-        p_gtid_prefix: "use `__METADB_NAME__`;"
+        p_gtid_prefix: "use `test_active_schema`;"

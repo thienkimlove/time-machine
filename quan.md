@@ -118,3 +118,18 @@ Run command `python data-flusher.py --host=103.7.41.141 --user=root --passwd=tie
 5. MySQL Replicator
 
 Replicates data changes from MySQL binlog to HBase or Kafka. In case of HBase, preserves the previous data versions. HBase storage is intended for auditing purposes of historical data. In addition, special daily-changes tables can be maintained in HBase, which are convenient for fast and cheap imports from HBase to Hive. Replication to Kafka is intended for easy real-time access to a stream of data changes.
+
+Build `mvn package`
+
+```bash
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /opt/Docker/applierdb/time-machine/target/mysql-replicator-0.14.2.jar with /opt/Docker/applierdb/time-machine/target/mysql-replicator-0.14.2-shaded.jar
+[INFO] Dependency-reduced POM written at: /opt/Docker/applierdb/time-machine/dependency-reduced-pom.xml
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 13:20 min
+[INFO] Finished at: 2017-11-03T13:43:32+07:00
+[INFO] Final Memory: 70M/650M
+[INFO] ------------------------------------------------------------------------
+```
