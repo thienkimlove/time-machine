@@ -1,0 +1,7 @@
+java -jar ../../target/mysql-replicator-0.14.2.jar \
+    --hbase-namespace ns \
+    --applier hbase \
+    --schema test \
+    --binlog-filename 5860be60b3c4-bin.000001 \
+    --config-path  ./hbase_dryrun.yml \
+    --initial-snapshot
