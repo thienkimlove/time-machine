@@ -76,7 +76,7 @@ public class BinlogEventProducer {
         // config
         openReplicator.setUser(configuration.getReplicantDBUserName());
         openReplicator.setPassword(configuration.getReplicantDBPassword());
-        openReplicator.setPort(hostParse[1]);
+        openReplicator.setPort(Integer.ParseInt(hostParse[1]));
 
         // pool
         openReplicator.setHost(hostParse[0]);
