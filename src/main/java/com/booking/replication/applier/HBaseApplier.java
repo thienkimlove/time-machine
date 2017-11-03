@@ -137,6 +137,7 @@ public class HBaseApplier implements Applier {
         try {
             hbaseApplierWriter.pushToCurrentTaskBuffer(augmentedRowsEvent);
         } catch (TaskBufferInconsistencyException e) {
+            LOGGER.info("quan-debug:pushToCurrentTaskBuffer" + e);
             throw new ApplierException(e);
         }
 
@@ -203,6 +204,7 @@ public class HBaseApplier implements Applier {
         try {
             hbaseApplierWriter.submitTasksThatAreReadyForPickUp();
         } catch (TaskBufferInconsistencyException te) {
+            LOGGER.info("quan-debug:ApplierException" + te);
             throw new ApplierException(te);
         }
     }
