@@ -112,3 +112,5 @@ hbase.zookeeper.quorum
 4. Start with Binlog Flusher (`https://github.com/mysql-time-machine/replicator/tree/master/binlog-flusher`)
 
 Flushes MySQL database tables to the binlog in order to have the initial snapshot of the database in the binlog.
+
+``
