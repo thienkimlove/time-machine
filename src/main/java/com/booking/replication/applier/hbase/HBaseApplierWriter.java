@@ -601,6 +601,7 @@ public class HBaseApplierWriter {
                     List<AugmentedRow> bufferedOPS = task.get(transactionUuid).get(tableName);
                     if (bufferedOPS != null && bufferedOPS.size() > 0) {
                         taskHasRows = true;
+                        LOGGER.info("quan-debug:bufferedOPS" + bufferedOPS);
                     } else {
                         LOGGER.info("Table " + tableName + " has no rows!!!");
                     }
