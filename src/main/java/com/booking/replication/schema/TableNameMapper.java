@@ -38,11 +38,11 @@ public class TableNameMapper {
             suffix = sdf.format(resultDate);
         }
 
-        return "delta:" + replicantNamespace.toLowerCase() + "_" + mysqlTableName.toLowerCase() + "_" + suffix;
+        return "delta_" + replicantNamespace.toLowerCase() + "_" + mysqlTableName.toLowerCase() + "_" + suffix;
     }
 
     public static String getSchemaHistoryHBaseTableName(Configuration configuration) {
-        return "schema_history:" + configuration.getHbaseNamespace();
+        return "schema_history_" + configuration.getHbaseNamespace();
     }
 
 }
