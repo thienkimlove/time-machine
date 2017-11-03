@@ -13,7 +13,7 @@ metadata_store:
        path: '/tmp/replication_metadata_path.txt'
 
 hbase:
-    namespace: 'hbase_test'
+    namespace: 'quan'
     zookeeper_quorum:  ['localhost']
     hive_imports:
         tables: ['test_hbase']
