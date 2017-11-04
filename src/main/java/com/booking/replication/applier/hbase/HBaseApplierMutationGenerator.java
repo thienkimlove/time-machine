@@ -380,6 +380,7 @@ public class HBaseApplierMutationGenerator {
         }
 
         LOGGER.error("quan-debug:pkColumnValues" + pkColumnValues);
+        LOGGER.error("quan-debug:pkColumnNames" + pkColumnNames);
 
         String hbaseRowID = Joiner.on(";").join(pkColumnValues);
 
