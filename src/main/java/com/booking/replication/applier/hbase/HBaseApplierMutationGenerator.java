@@ -379,18 +379,20 @@ public class HBaseApplierMutationGenerator {
             }
         }
 
-        LOGGER.error("quan-debug:pkColumnValues" + pkColumnValues);
-        LOGGER.error("quan-debug:pkColumnNames" + pkColumnNames);
+        try {
 
-        String hbaseRowID = Joiner.on(";").join(pkColumnValues);
+            String hbaseRowID = Joiner.on(";").join(pkColumnValues);
+            String saltingPartOfKey = pkColumnValues.get(0);
 
-        LOGGER.error("quan-debug:hbaseRowID" + hbaseRowID);
+            // avoid region hot-spotting
+            hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
+            return hbaseRowID;
+        } catch (Exception e) {
+            LOGGER.error("quan-debug:no getPrimaryKeyColumns" + pkColumnNames);
+            return null;
+        }
 
-        String saltingPartOfKey = pkColumnValues.get(0);
 
-        // avoid region hot-spotting
-        hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
-        return hbaseRowID;
     }
 
     /**

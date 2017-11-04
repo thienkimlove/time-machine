@@ -13,10 +13,10 @@ metadata_store:
        path: '/tmp/replication_metadata_path.txt'
 
 hbase:
-    namespace: 'quan'
+    namespace: 'users'
     zookeeper_quorum:  ['localhost']
     hive_imports:
-        tables: ['pet']
+        tables: ['user_change']
 
 mysql_failover:
      pgtid:
