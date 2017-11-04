@@ -72,6 +72,8 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
 
         final Timer.Context taskTimer = taskLatencyTimer.time();
 
+        System.out.println("quan-debug:HBaseTaskResult");
+
         ChaosMonkey chaosMonkey = new ChaosMonkey();
 
         if (chaosMonkey.feelsLikeThrowingExceptionAfterTaskSubmitted()) {
