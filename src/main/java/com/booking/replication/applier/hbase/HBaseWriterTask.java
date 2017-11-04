@@ -116,32 +116,36 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                     for (Map.Entry<String, List<HBaseApplierMutationGenerator.PutMutation>> entry : mutationsByTable.entrySet()){
 
                         String tableName = entry.getKey();
-                        List<HBaseApplierMutationGenerator.PutMutation> mutations = entry.getValue();
+                        System.out.println("quan-debug:tableName" + tableName);
 
-                        if (!DRY_RUN) {
-                            Table table = hbaseConnection.getTable(TableName.valueOf(tableName));
-                            table.put( mutations.stream().map( mutation -> mutation.getPut() ).collect(Collectors.toList()) );
-                            table.close();
+                        try {
+                            List<HBaseApplierMutationGenerator.PutMutation> mutations = entry.getValue();
+                            if (!DRY_RUN) {
+                                Table table = hbaseConnection.getTable(TableName.valueOf(tableName));
+                                table.put( mutations.stream().map( mutation -> mutation.getPut() ).collect(Collectors.toList()) );
+                                table.close();
 
-                            for (HBaseApplierMutationGenerator.PutMutation mutation : mutations){
-                                if (validationService != null) validationService.registerValidationTask(transactionUuid, mutation.getSourceRowUri(), mutation.getTargetRowUri());
+                                for (HBaseApplierMutationGenerator.PutMutation mutation : mutations){
+                                    if (validationService != null) validationService.registerValidationTask(transactionUuid, mutation.getSourceRowUri(), mutation.getTargetRowUri());
+                                }
+
+                            } else {
+                                System.out.println("Running in dry-run mode, prepared " + mutations.size() + " mutations.");
+                                Thread.sleep(1000);
                             }
 
-                        } else {
-                            System.out.println("Running in dry-run mode, prepared " + mutations.size() + " mutations.");
-                            Thread.sleep(1000);
-                        }
+                            if (entry.getValue().get(0).isTableMirrored()) {
+                                numberOfFlushedTablesInCurrentTransaction++;
+                            }
 
-                        if (entry.getValue().get(0).isTableMirrored()) {
-                            numberOfFlushedTablesInCurrentTransaction++;
-                        }
+                            PerTableMetrics.get(tableName).committed.inc(mutations.size());
 
-                        PerTableMetrics.get(tableName).committed.inc(mutations.size());
-                        try {
                             rowOpsCommittedToHbase.mark(mutations.size());
+
                         } catch (Exception e) {
-                            System.out.println("quan-debug:rowOpsCommittedToHbase Error" + e.getCause());
+                            System.out.println("quan-debug:HBaseApplierMutationGenerator Error" + e.getCause());
                         }
+
                     }
 
                 }
