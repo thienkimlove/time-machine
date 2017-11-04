@@ -120,6 +120,8 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                         Map<String, List<HBaseApplierMutationGenerator.PutMutation>> mutationsByTable = mutationGenerator.generateMutations(rowOps).stream()
                                 .collect(Collectors.groupingBy(mutation->mutation.getTable()));
 
+                        System.out.println("quan-debug:bufferedMySQLTableName122" + mutationsByTable);
+
                         for (Map.Entry<String, List<HBaseApplierMutationGenerator.PutMutation>> entry : mutationsByTable.entrySet()){
 
                             String tableName = entry.getKey();
