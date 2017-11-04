@@ -153,6 +153,8 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
 
             timerContext.stop();
 
+
+
             // data integrity check
             if (numberOfTablesInCurrentTransaction != numberOfFlushedTablesInCurrentTransaction) {
                 LOGGER.error(String.format("Failed integrity check number of tables: %s != %s",
@@ -168,6 +170,8 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
         System.out.println("quan-debug: before taskTimer stop");
 
         taskTimer.stop();
+
+        System.out.println("quan-debug: after taskTimer stop");
 
         if (DRY_RUN) {
             Thread.sleep(100);

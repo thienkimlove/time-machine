@@ -107,7 +107,7 @@ public class Replicator {
 
                         LOGGER.info("found pseudoGTID in safe checkpoint: " + pseudoGTID);
 
-                        BinlogCoordinatesFinder coordinatesFinder = new BinlogCoordinatesFinder(replicantActiveHost,3306,configuration.getReplicantDBUserName(),configuration.getReplicantDBPassword());
+                        BinlogCoordinatesFinder coordinatesFinder = new BinlogCoordinatesFinder(replicantActiveHost,configuration.getReplicantPort(),configuration.getReplicantDBUserName(),configuration.getReplicantDBPassword());
 
                         BinlogCoordinatesFinder.BinlogCoordinates coordinates = coordinatesFinder.findCoordinates(pseudoGTID);
 
