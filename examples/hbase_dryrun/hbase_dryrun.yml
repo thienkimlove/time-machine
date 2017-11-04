@@ -1,5 +1,5 @@
 replication_schema:
-   name:      'test'
+   name:      'products'
    username:  'root'
    password:  'tieungao'
    host_pool: ['103.7.41.141']
