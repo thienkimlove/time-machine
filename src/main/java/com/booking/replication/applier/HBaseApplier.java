@@ -41,7 +41,7 @@ public class HBaseApplier implements Applier {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HBaseApplier.class);
 
-    private static final int DEFAULT_VERSIONS_FOR_MIRRORED_TABLES = 1000;
+    private static final int DEFAULT_VERSIONS_FOR_MIRRORED_TABLES = 10;
 
     private final HBaseSchemaManager hbaseSchemaManager;
 

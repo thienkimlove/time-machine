@@ -157,7 +157,7 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
 
                         }
                     } else {
-                        System.out.println("quan-debug:bufferedMySQLTableName is null" + bufferedMySQLTableName);
+                        System.out.println("quan-debug:bufferedMySQLTableName is null");
                     }
 
                 }
