@@ -157,3 +157,25 @@ java -jar ../../target/mysql-replicator-0.14.2.jar --hbase-namespace today --app
 
 
 Currently we have problem with write to HBase table.
+
+#### Final
+
+1. we build server `git fetch && git pull && mvn package`
+
+2. Create database for `simple test` and `init run first time`
+
+3. Run `python data-flusher.py --host=103.7.41.141 --user=root --passwd=tieungao --port=33061` 
+
+4. Run `java -jar ../../target/mysql-replicator-0.14.2.jar --applier STDOUT --schema test --binlog-filename mysql-bin.000001 --config-path ./simple_stdout.yml` for testing.
+
+5. Run at first time
+
+```bash
+java -jar ../../target/mysql-replicator-0.14.2.jar \
+    --schema test \
+    --applier hbase \
+    --binlog-filename mysql-bin.000001 \
+    --config-path  ./hbase_dryrun.yml \
+    --initial-snapshot
+```
+6. Wait til it completed.

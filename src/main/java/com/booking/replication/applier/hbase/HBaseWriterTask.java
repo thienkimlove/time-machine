@@ -182,12 +182,18 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
             );
         }
 
+        System.out.println("quan-debug: No dryrun");
+
         // task result
-        return new HBaseTaskResult(
+        HBaseTaskResult test = new HBaseTaskResult(
                 taskUuid,
                 TaskStatus.WRITE_SUCCEEDED,
                 true
         );
+
+        System.out.println("quan-debug: have variable test");
+
+        return test;
     }
 
     private static class PerTableMetrics {
