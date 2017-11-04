@@ -26,6 +26,7 @@ vi /opt/Docker/slavedb/cnf/config-file.cnf
 ## Config Settings:
 #[mysqld]
 #server-id=2
+#binlog_format=ROW
 #log-bin
 
 # Launch master instance
@@ -143,13 +144,16 @@ We make change abit in Java Source and Test to allow mysql from other port than 
   </property>
 ```
 
+Check mysql bin log to `log_format=ROW` and we test with
+
 ```
-java -jar ../../target/mysql-replicator-0.14.2.jar     --hbase-namespace ns     --applier hbase   --config-path  ./hbase_dryrun.yml     --delta
+java -jar ../../target/mysql-replicator-0.14.2.jar --applier STDOUT --schema test --binlog-filename mysql-bin.000001 --config-path ./simple_stdout.yml
 ```
 
-Change mysql bin log to `log_format=ROW` and we test with
 ```
-java -jar ../../target/mysql-replicator-0.14.2.jar     --applier STDOUT     --schema test     --binlog-filename mysql-bin.000001     --config-path  ./simple_stdout.yml
+java -jar ../../target/mysql-replicator-0.14.2.jar --hbase-namespace ns --applier hbase --config-path ./hbase_dryrun.yml --delta
 ```
+
+
 
 Currently we have problem with write to HBase table.
