@@ -231,6 +231,7 @@ public class PipelineOrchestrator extends Thread {
         setRunning(true);
         timeOfLastEvent = System.currentTimeMillis();
         try {
+            LOGGER.info("quan-debug:processQueueLoop");
             // block in a loop
             processQueueLoop();
 
@@ -412,6 +413,8 @@ public class PipelineOrchestrator extends Thread {
         if (applier instanceof HBaseApplier) {
             LastCommittedPositionCheckpoint lastCommittedPseudoGTIDReportedByApplier =
                 ((HBaseApplier) applier).getLastCommittedPseudGTIDCheckPoint();
+
+            LOGGER.debug("quan-debug:lastCommittedPseudoGTIDReportedByApplier" + lastCommittedPseudoGTIDReportedByApplier);
 
             if (lastVerifiedPseudoGTIDCheckPoint == null
                     && lastCommittedPseudoGTIDReportedByApplier != null) {
