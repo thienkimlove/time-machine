@@ -101,6 +101,8 @@ public class HBaseApplierMutationGenerator {
 
         Set<String> tablesForDelta = configuration.getTablesForWhichToTrackDailyChanges().stream().collect(Collectors.toSet());
 
+        LOGGER.info("quan-debug:tablesForDelta" + tablesForDelta);
+
         boolean writeDelta = configuration.isWriteRecentChangesToDeltaTables();
 
         return augmentedRows.stream()
@@ -119,6 +121,8 @@ public class HBaseApplierMutationGenerator {
 
         String hbaseTableName =
                 configuration.getHbaseNamespace() + "_" + row.getTableName().toLowerCase();
+
+        LOGGER.info("quan-debug:getPutForMirroredTablehbaseTableName" + hbaseTableName);
 
         Put put = new Put(Bytes.toBytes(hbaseRowID));
 
@@ -232,6 +236,8 @@ public class HBaseApplierMutationGenerator {
                 mySQLTableName,
                 isInitialSnapshot
         );
+
+        LOGGER.info("quan-debug:getPutForDeltaTable" + deltaTableName);
 
         Put put = new Put(Bytes.toBytes(hbaseRowID));
 
