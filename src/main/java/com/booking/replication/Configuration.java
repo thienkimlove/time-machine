@@ -44,7 +44,7 @@ public class Configuration {
         public String       username;
         public String       password;
         public List<String> host_pool;
-        public int          port        = 33061;
+        public int          port        = 33060;
     }
 
 

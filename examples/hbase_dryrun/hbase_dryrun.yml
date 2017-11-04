@@ -8,15 +8,15 @@ metadata_store:
     username: 'root'
     password: 'tieungao'
     host:     'localhost'
-    database: 'gg_stores'
+    database: 'hh_stores'
     file:
-       path: '/tmp/gg_meta.txt'
+       path: '/tmp/hh_meta.txt'
 
 hbase:
-    namespace: 'gg'
+    namespace: 'hh'
     zookeeper_quorum:  ['localhost']
     hive_imports:
-        tables: ['gg_delta']
+        tables: ['hh_delta']
 
 mysql_failover:
      pgtid:
