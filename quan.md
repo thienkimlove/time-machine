@@ -58,10 +58,49 @@ docker exec -ti slavedb 'mysql' -uroot -ptieungao -e"START SLAVE;" -vvv
 docker exec -ti slavedb 'mysql' -uroot -ptieungao -e"SHOW SLAVE STATUS" -vvv
 
 #Create test table
+
+***This have no Primary ID will make error Index : 0, Size : 0***
+
 # CREATE TABLE pet (name VARCHAR(20), owner VARCHAR(20), species VARCHAR(20), sex CHAR(1), birth DATE, death DATE);
 # INSERT INTO test.pet (name, owner, species, sex, birth, death) VALUE('test', 'quan', '10', 'f', '2017-10-10', '2018-10-10')
 
 ```
+
+We must using 
+
+```sql
+
+
+CREATE TABLE `products`.`users` (
+  `remember_token` text,
+  `name` text,
+  `created_at` text,
+  `updated_at` text,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` text,
+  `email` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `products`.`users`
+(`remember_token`,
+`name`,
+`created_at`,
+`updated_at`,
+`password`,
+`email`)
+VALUES
+('test',
+'tieungao',
+NOW(),
+NOW(),
+'abadfasdfasdfasdfasdfasdf',
+'whenoff@yahoo.com');
+
+```
+
+
 testing database information
 ```
 Master DB
@@ -276,3 +315,44 @@ java -jar ../../target/mysql-replicator-0.14.2.jar \
     --applier hbase \
     --config-path  ./hbase_dryrun.yml 
 ```
+- SQL for Create tables and insert row
+
+```sql
+CREATE TABLE `products`.`users` (
+  `remember_token` text,
+  `name` text,
+  `created_at` text,
+  `updated_at` text,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` text,
+  `email` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+INSERT INTO `products`.`users`
+(`remember_token`,
+`name`,
+`created_at`,
+`updated_at`,
+`password`,
+`email`)
+VALUES
+('test',
+'tieungao',
+NOW(),
+NOW(),
+'abadfasdfasdfasdfasdfasdf',
+'whenoff@yahoo.com');
+
+
+```
+
+We can running with nohup
+
+```bash
+nohup java -jar ../../target/mysql-replicator-0.14.2.jar     --schema products     --applier hbase     --config-path  ./hbase_dryrun.yml &
+```
+
+Read `cat nohup.out` for details.
+
+Next we must continue with `git@github.com:mysql-time-machine/hbase-snapshotter.git`
