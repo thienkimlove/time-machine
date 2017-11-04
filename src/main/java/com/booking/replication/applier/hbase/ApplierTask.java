@@ -21,6 +21,8 @@ class ApplierTask extends HashMap<String, TransactionProxy> {
 
     ApplierTask(TaskStatus taskStatus, Future<HBaseTaskResult> taskResultFuture) {
         super();
+        System.out.println("quan-debug:" + taskStatus);
+        System.out.println("quan-debug:" + taskResultFuture);
         setTaskStatus(taskStatus);
         setTaskFuture(taskResultFuture);
     }
