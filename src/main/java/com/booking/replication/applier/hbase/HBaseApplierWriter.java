@@ -471,7 +471,10 @@ public class HBaseApplierWriter {
             }
 
             try {
+                LOGGER.debug("Start to get taskFuture");
                 Future<HBaseTaskResult>  taskFuture = taskTransactionBuffer.get(submittedTaskUuid).getTaskFuture();
+
+                LOGGER.debug("End to get taskFuture");
                 if (taskFuture == null) {
                     continue;
                 }
@@ -521,6 +524,8 @@ public class HBaseApplierWriter {
                         requeueTask(submittedTaskUuid);
                         applierTasksFailedCounter.inc();
                     }
+                } else {
+                    LOGGER.debug("Task  is not done");
                 }
             } catch (ExecutionException ex) {
                 LOGGER.error(String.format("Future failed for task %s, with exception: %s",
