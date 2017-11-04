@@ -635,7 +635,7 @@ public class HBaseApplierWriter {
                                 DRY_RUN
                         )
                     ));
-                    LOGGER.info("Task is submit to taskPool");
+                    LOGGER.info("Task is submit to taskPool" + taskTransactionBuffer.get(taskUuid));
                 } else {
                     LOGGER.error("Task is marked as READY_FOR_PICK_UP, but has no rows");
                     throw new TaskBufferInconsistencyException("Task is marked as READY_FOR_PICK_UP, but has no rows.");
