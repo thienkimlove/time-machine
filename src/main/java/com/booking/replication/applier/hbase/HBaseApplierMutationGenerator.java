@@ -379,7 +379,12 @@ public class HBaseApplierMutationGenerator {
             }
         }
 
+        LOGGER.error("quan-debug:pkColumnValues" + pkColumnValues);
+
         String hbaseRowID = Joiner.on(";").join(pkColumnValues);
+
+        LOGGER.error("quan-debug:hbaseRowID" + hbaseRowID);
+
         String saltingPartOfKey = pkColumnValues.get(0);
 
         // avoid region hot-spotting
