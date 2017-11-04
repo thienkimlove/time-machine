@@ -16,7 +16,7 @@ hbase:
     namespace: 'quan'
     zookeeper_quorum:  ['localhost']
     hive_imports:
-        tables: []
+        tables: ['pet']
 
 mysql_failover:
      pgtid:
