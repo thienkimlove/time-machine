@@ -355,4 +355,12 @@ nohup java -jar ../../target/mysql-replicator-0.14.2.jar     --schema products  
 
 Read `cat nohup.out` for details.
 
+When create new tables, we must using `CREATE Database.TableName` without ```. Please check 
+
+```scala
+LOGGER.warn("No Db name in Query Event. Extracted SQL: " + ((QueryEvent) event).getSql().toString());
+```
+
+on `PipelineOrchestrator.java`
+
 Next we must continue with `git@github.com:mysql-time-machine/hbase-snapshotter.git`
