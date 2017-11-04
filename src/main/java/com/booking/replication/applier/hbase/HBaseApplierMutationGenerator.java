@@ -105,13 +105,18 @@ public class HBaseApplierMutationGenerator {
 
         boolean writeDelta = configuration.isWriteRecentChangesToDeltaTables();
 
-        return augmentedRows.stream()
-                .flatMap(
-                        row -> writeDelta && tablesForDelta.contains(row.getTableName())
-                                ? Stream.of(getPutForMirroredTable(row), getPutForDeltaTable(row) )
-                                : Stream.of(getPutForMirroredTable(row)) )
-                .collect(Collectors.toList());
+        try {
+            return augmentedRows.stream()
+                    .flatMap(
+                            row -> writeDelta && tablesForDelta.contains(row.getTableName())
+                                    ? Stream.of(getPutForMirroredTable(row), getPutForDeltaTable(row) )
+                                    : Stream.of(getPutForMirroredTable(row)) )
+                    .collect(Collectors.toList());
 
+        } catch (Exception e) {
+            LOGGER.info("quan-debug:augmentedRows error");
+            return null;
+        }
     }
 
     private PutMutation getPutForMirroredTable(AugmentedRow row) {
