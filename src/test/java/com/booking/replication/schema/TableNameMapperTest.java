@@ -24,7 +24,7 @@ public class TableNameMapperTest {
                 isInitialSnapshot
             );
 
-        assertEquals("delta:" + dbName.toLowerCase() + "_" + tableName.toLowerCase() + "_" + "initial", deltaTableName);
+        assertEquals("delta_" + dbName.toLowerCase() + "_" + tableName.toLowerCase() + "_" + "initial", deltaTableName);
     }
 
     @Test
@@ -42,6 +42,6 @@ public class TableNameMapperTest {
                 isInitialSnapshot
         );
 
-        assertEquals("delta:" + dbName.toLowerCase() + "_" + tableName.toLowerCase() + "_" + "20160329", deltaTableName);
+        assertEquals("delta_" + dbName.toLowerCase() + "_" + tableName.toLowerCase() + "_" + "20160329", deltaTableName);
     }
 }
