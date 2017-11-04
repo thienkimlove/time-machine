@@ -17,8 +17,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.codahale.metrics.MetricRegistry.name;
@@ -295,7 +304,6 @@ public class HBaseApplierWriter {
                     .get(mySQLTableName)
                     .add(augmentedRow);
             rowsBufferedInCurrentTask.incrementAndGet();
-            LOGGER.info("quan-debug:taskTransactionBuffer" + mySQLTableName + augmentedRow);
         }
     }
 
@@ -602,7 +610,6 @@ public class HBaseApplierWriter {
                     List<AugmentedRow> bufferedOPS = task.get(transactionUuid).get(tableName);
                     if (bufferedOPS != null && bufferedOPS.size() > 0) {
                         taskHasRows = true;
-                        LOGGER.info("quan-debug:bufferedOPS" + bufferedOPS.get(0));
                     } else {
                         LOGGER.info("Table " + tableName + " has no rows!!!");
                     }
@@ -636,7 +643,6 @@ public class HBaseApplierWriter {
                                 DRY_RUN
                         )
                     ));
-                    LOGGER.info("Task is submit to taskPool" + taskTransactionBuffer.get(taskUuid));
                 } else {
                     LOGGER.error("Task is marked as READY_FOR_PICK_UP, but has no rows");
                     throw new TaskBufferInconsistencyException("Task is marked as READY_FOR_PICK_UP, but has no rows.");

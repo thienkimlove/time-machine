@@ -2,6 +2,7 @@ package com.booking.replication;
 
 import com.booking.replication.checkpoints.LastCommittedPositionCheckpoint;
 import com.booking.replication.coordinator.CoordinatorInterface;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

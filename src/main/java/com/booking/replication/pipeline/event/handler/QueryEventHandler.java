@@ -2,6 +2,7 @@ package com.booking.replication.pipeline.event.handler;
 
 import com.booking.replication.Coordinator;
 import com.booking.replication.Metrics;
+import com.booking.replication.applier.Applier;
 import com.booking.replication.applier.ApplierException;
 import com.booking.replication.applier.HBaseApplier;
 import com.booking.replication.applier.hbase.TaskBufferInconsistencyException;
@@ -67,7 +68,6 @@ public class QueryEventHandler implements BinlogEventV4Handler {
             case DDLTABLE:
                 // Sync all the things here.
                 eventHandlerConfiguration.getApplier().forceFlush();
-                LOGGER.info("quan-debug:eventHandlerConfiguration.getApplier().forceFlush");
                 eventHandlerConfiguration.getApplier().waitUntilAllRowsAreCommitted(event);
 
                 try {

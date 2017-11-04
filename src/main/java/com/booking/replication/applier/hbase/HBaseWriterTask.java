@@ -1,5 +1,7 @@
 package com.booking.replication.applier.hbase;
 
+import static com.codahale.metrics.MetricRegistry.name;
+
 import com.booking.replication.Metrics;
 import com.booking.replication.applier.ChaosMonkey;
 import com.booking.replication.applier.TaskStatus;
@@ -19,8 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
-
-import static com.codahale.metrics.MetricRegistry.name;
 
 public class HBaseWriterTask implements Callable<HBaseTaskResult> {
 
@@ -72,8 +72,6 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
 
         final Timer.Context taskTimer = taskLatencyTimer.time();
 
-        System.out.println("quan-debug:HBaseTaskResult");
-
         ChaosMonkey chaosMonkey = new ChaosMonkey();
 
         if (chaosMonkey.feelsLikeThrowingExceptionAfterTaskSubmitted()) {
@@ -81,7 +79,6 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
         }
 
         if (chaosMonkey.feelsLikeFailingSubmitedTaskWithoutException()) {
-            System.out.println("quan-debug:feelsLikeFailingSubmitedTaskWithoutException84");
             return new HBaseTaskResult(taskUuid, TaskStatus.WRITE_FAILED, false);
         }
 
@@ -91,13 +88,10 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
             throw new Exception("Chaos monkey exception for task in progress!");
         }
         if (chaosMonkey.feelsLikeFailingTaskInProgessWithoutException()) {
-            System.out.println("quan-debug:feelsLikeFailingTaskInProgessWithoutException94");
             return new HBaseTaskResult(taskUuid, TaskStatus.WRITE_FAILED, false);
         }
 
         for (final String transactionUuid : taskTransactionBuffer.keySet()) {
-
-            System.out.println("quan-debug:before-numberOfTablesInCurrentTransaction");
 
             int numberOfTablesInCurrentTransaction = taskTransactionBuffer.get(transactionUuid).keySet().size();
 
@@ -109,55 +103,43 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                 if (chaosMonkey.feelsLikeThrowingExceptionBeforeFlushingData()) {
                     throw new Exception("Chaos monkey is here to prevent call to flush!!!");
                 } else if (chaosMonkey.feelsLikeFailingDataFlushWithoutException()) {
-                    System.out.println("quan-debug:feelsLikeFailingDataFlushWithoutException112");
                     return new HBaseTaskResult(taskUuid, TaskStatus.WRITE_FAILED, false);
                 } else {
                     List<AugmentedRow> rowOps = taskTransactionBuffer.get(transactionUuid).get(bufferedMySQLTableName);
 
-                    System.out.println("quan-debug:bufferedMySQLTableName117" + bufferedMySQLTableName);
+                    Map<String, List<HBaseApplierMutationGenerator.PutMutation>> mutationsByTable = mutationGenerator.generateMutations(rowOps).stream()
+                            .collect(
+                                        Collectors.groupingBy( mutation->mutation.getTable()
+                                    )
+                            );
 
-                    if (bufferedMySQLTableName != null) {
-                        Map<String, List<HBaseApplierMutationGenerator.PutMutation>> mutationsByTable = mutationGenerator.generateMutations(rowOps).stream()
-                                .collect(Collectors.groupingBy(mutation->mutation.getTable()));
+                    for (Map.Entry<String, List<HBaseApplierMutationGenerator.PutMutation>> entry : mutationsByTable.entrySet()){
 
-                        System.out.println("quan-debug:bufferedMySQLTableName122" + mutationsByTable);
+                        String tableName = entry.getKey();
+                        List<HBaseApplierMutationGenerator.PutMutation> mutations = entry.getValue();
 
-                        for (Map.Entry<String, List<HBaseApplierMutationGenerator.PutMutation>> entry : mutationsByTable.entrySet()){
+                        if (!DRY_RUN) {
+                            Table table = hbaseConnection.getTable(TableName.valueOf(tableName));
+                            table.put( mutations.stream().map( mutation -> mutation.getPut() ).collect(Collectors.toList()) );
+                            table.close();
 
-                            String tableName = entry.getKey();
-                            System.out.println("quan-debug:tableName" + tableName);
-
-                            try {
-                                List<HBaseApplierMutationGenerator.PutMutation> mutations = entry.getValue();
-                                if (!DRY_RUN) {
-                                    Table table = hbaseConnection.getTable(TableName.valueOf(tableName));
-                                    table.put( mutations.stream().map( mutation -> mutation.getPut() ).collect(Collectors.toList()) );
-                                    table.close();
-
-                                    for (HBaseApplierMutationGenerator.PutMutation mutation : mutations){
-                                        if (validationService != null) validationService.registerValidationTask(transactionUuid, mutation.getSourceRowUri(), mutation.getTargetRowUri());
-                                    }
-
-                                } else {
-                                    System.out.println("Running in dry-run mode, prepared " + mutations.size() + " mutations.");
-                                    Thread.sleep(1000);
-                                }
-
-                                if (entry.getValue().get(0).isTableMirrored()) {
-                                    numberOfFlushedTablesInCurrentTransaction++;
-                                }
-
-                                PerTableMetrics.get(tableName).committed.inc(mutations.size());
-
-                                rowOpsCommittedToHbase.mark(mutations.size());
-
-                            } catch (Exception e) {
-                                System.out.println("quan-debug:HBaseApplierMutationGenerator Error" + e.getCause());
+                            for (HBaseApplierMutationGenerator.PutMutation mutation : mutations){
+                                if (validationService != null) validationService.registerValidationTask(transactionUuid, mutation.getSourceRowUri(), mutation.getTargetRowUri());
                             }
 
+                        } else {
+                            System.out.println("Running in dry-run mode, prepared " + mutations.size() + " mutations.");
+                            Thread.sleep(1000);
                         }
-                    } else {
-                        System.out.println("quan-debug:bufferedMySQLTableName is null");
+
+                        if (entry.getValue().get(0).isTableMirrored()) {
+                            numberOfFlushedTablesInCurrentTransaction++;
+                        }
+
+                        PerTableMetrics.get(tableName).committed.inc(mutations.size());
+
+                        rowOpsCommittedToHbase.mark(mutations.size());
+
                     }
 
                 }

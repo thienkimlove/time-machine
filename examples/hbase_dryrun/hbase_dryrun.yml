@@ -2,23 +2,18 @@ replication_schema:
    name:      'test'
    username:  'root'
    password:  'tieungao'
-   host_pool: ['103.7.41.141:33061']
+   host_pool: ['103.7.41.141']
 
 metadata_store:
     username: 'root'
     password: 'tieungao'
     host:     'localhost'
-    database: 'test_active_schema'
+    database: 'meta_stores'
     file:
-       path: '/tmp/replication_metadata_path.txt'
+       path: '/tmp/origin.txt'
 
 hbase:
-    namespace: 'users'
+    namespace: 'qq'
     zookeeper_quorum:  ['localhost']
     hive_imports:
-        tables: ['user_change']
-
-mysql_failover:
-     pgtid:
-         p_gtid_pattern: '(?<=_pseudo_gtid_hint__asc\:)(.{8}\:.{16}\:.{8})'
-         p_gtid_prefix: "use `test_active_schema`;"
+        tables: ['qq_delta']

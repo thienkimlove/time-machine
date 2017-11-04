@@ -1,6 +1,7 @@
 package com.booking.replication.applier;
 
 import com.booking.replication.Constants;
+
 import com.booking.replication.applier.hbase.HBaseApplierWriter;
 import com.booking.replication.applier.hbase.TaskBufferInconsistencyException;
 import com.booking.replication.augmenter.AugmentedRowsEvent;
@@ -9,11 +10,18 @@ import com.booking.replication.checkpoints.LastCommittedPositionCheckpoint;
 import com.booking.replication.pipeline.CurrentTransaction;
 import com.booking.replication.pipeline.PipelineOrchestrator;
 import com.booking.replication.schema.HBaseSchemaManager;
+
 import com.booking.replication.schema.TableNameMapper;
 import com.booking.replication.validation.ValidationService;
 import com.codahale.metrics.Counter;
 import com.google.code.or.binlog.BinlogEventV4;
-import com.google.code.or.binlog.impl.event.*;
+
+import com.google.code.or.binlog.impl.event.FormatDescriptionEvent;
+import com.google.code.or.binlog.impl.event.QueryEvent;
+import com.google.code.or.binlog.impl.event.RotateEvent;
+import com.google.code.or.binlog.impl.event.TableMapEvent;
+import com.google.code.or.binlog.impl.event.XidEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +49,7 @@ public class HBaseApplier implements Applier {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HBaseApplier.class);
 
-    private static final int DEFAULT_VERSIONS_FOR_MIRRORED_TABLES = 10;
+    private static final int DEFAULT_VERSIONS_FOR_MIRRORED_TABLES = 1000;
 
     private final HBaseSchemaManager hbaseSchemaManager;
 
@@ -137,7 +145,6 @@ public class HBaseApplier implements Applier {
         try {
             hbaseApplierWriter.pushToCurrentTaskBuffer(augmentedRowsEvent);
         } catch (TaskBufferInconsistencyException e) {
-            LOGGER.info("quan-debug:pushToCurrentTaskBuffer" + e);
             throw new ApplierException(e);
         }
 
@@ -204,7 +211,6 @@ public class HBaseApplier implements Applier {
         try {
             hbaseApplierWriter.submitTasksThatAreReadyForPickUp();
         } catch (TaskBufferInconsistencyException te) {
-            LOGGER.info("quan-debug:ApplierException" + te);
             throw new ApplierException(te);
         }
     }
@@ -220,7 +226,7 @@ public class HBaseApplier implements Applier {
         String tableName = event.getTableName().toString();
 
         String hbaseTableName = configuration.getHbaseNamespace().toLowerCase()
-                + "_"
+                + ":"
                 + tableName.toLowerCase();
 
         if (! hbaseSchemaManager.isTableKnownToHBase(hbaseTableName)) {
@@ -228,7 +234,6 @@ public class HBaseApplier implements Applier {
             // replaying the binlog.
             // TODO: load hbase tables on start-up so this never happens
             hbaseSchemaManager.createMirroredTableIfNotExists(hbaseTableName, DEFAULT_VERSIONS_FOR_MIRRORED_TABLES);
-            LOGGER.info("quan-debug:createMirroredTableIfNotExists" + hbaseTableName);
         }
 
         if (configuration.isWriteRecentChangesToDeltaTables()) {
@@ -248,7 +253,6 @@ public class HBaseApplier implements Applier {
                 if (! hbaseSchemaManager.isTableKnownToHBase(deltaTableName)) {
                     boolean isInitialSnapshotMode = configuration.isInitialSnapshotMode();
                     hbaseSchemaManager.createDeltaTableIfNotExists(deltaTableName, isInitialSnapshotMode);
-                    LOGGER.info("quan-debug:createDeltaTableIfNotExists" + deltaTableName);
                 }
             }
         }

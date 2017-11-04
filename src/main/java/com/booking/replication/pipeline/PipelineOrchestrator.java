@@ -56,7 +56,7 @@ public class PipelineOrchestrator extends Thread {
     private static final Meter eventsSkippedCounter = Metrics.registry.meter(name("events", "eventsSkippedCounter"));
     private static final Meter eventsRewindedCounter = Metrics.registry.meter(name("events", "eventsRewindedCounter"));
 
-    private static final int BUFFER_FLUSH_INTERVAL = 300000; // <- force buffer flush every 30 sec
+    private static final int BUFFER_FLUSH_INTERVAL = 30000; // <- force buffer flush every 30 sec
     private static final int DEFAULT_VERSIONS_FOR_MIRRORED_TABLES = 1000;
     private static final long QUEUE_POLL_TIMEOUT = 100L;
     private static final long QUEUE_POLL_SLEEP = 500;
@@ -351,7 +351,6 @@ public class PipelineOrchestrator extends Thread {
                 boolean forceFlush = (timeDiff > BUFFER_FLUSH_INTERVAL);
                 if (forceFlush) {
                     applier.forceFlush();
-                    LOGGER.info("quan-debug:applier.forceFlush");
                 }
             }
         }

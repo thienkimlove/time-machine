@@ -2,9 +2,13 @@ package com.booking.replication.applier.hbase;
 
 import com.booking.replication.augmenter.AugmentedRow;
 import com.booking.replication.schema.TableNameMapper;
+
 import com.google.common.base.Joiner;
+
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
+
+import org.apache.hadoop.hbase.util.Triple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,23 +105,15 @@ public class HBaseApplierMutationGenerator {
 
         Set<String> tablesForDelta = configuration.getTablesForWhichToTrackDailyChanges().stream().collect(Collectors.toSet());
 
-        LOGGER.info("quan-debug:tablesForDelta" + tablesForDelta);
-
         boolean writeDelta = configuration.isWriteRecentChangesToDeltaTables();
 
-        try {
-            return augmentedRows.stream()
-                    .flatMap(
-                            row -> writeDelta && tablesForDelta.contains(row.getTableName())
-                                    ? Stream.of(getPutForMirroredTable(row), getPutForDeltaTable(row) )
-                                    : Stream.of(getPutForMirroredTable(row)) )
-                    .collect(Collectors.toList());
+        return augmentedRows.stream()
+                .flatMap(
+                        row -> writeDelta && tablesForDelta.contains(row.getTableName())
+                                ? Stream.of(getPutForMirroredTable(row), getPutForDeltaTable(row) )
+                                : Stream.of(getPutForMirroredTable(row)) )
+                .collect(Collectors.toList());
 
-        } catch (Exception e) {
-            LOGGER.info("quan-debug:augmentedRows error");
-            e.printStackTrace(System.out);
-            return null;
-        }
     }
 
     private PutMutation getPutForMirroredTable(AugmentedRow row) {
@@ -126,9 +122,7 @@ public class HBaseApplierMutationGenerator {
         String hbaseRowID = getHBaseRowKey(row);
 
         String hbaseTableName =
-                configuration.getHbaseNamespace() + "_" + row.getTableName().toLowerCase();
-
-        LOGGER.info("quan-debug:getPutForMirroredTablehbaseTableName" + hbaseTableName);
+                configuration.getHbaseNamespace() + ":" + row.getTableName().toLowerCase();
 
         Put put = new Put(Bytes.toBytes(hbaseRowID));
 
@@ -242,8 +236,6 @@ public class HBaseApplierMutationGenerator {
                 mySQLTableName,
                 isInitialSnapshot
         );
-
-        LOGGER.info("quan-debug:getPutForDeltaTable" + deltaTableName);
 
         Put put = new Put(Bytes.toBytes(hbaseRowID));
 
@@ -379,20 +371,12 @@ public class HBaseApplierMutationGenerator {
             }
         }
 
-        try {
+        String hbaseRowID = Joiner.on(";").join(pkColumnValues);
+        String saltingPartOfKey = pkColumnValues.get(0);
 
-            String hbaseRowID = Joiner.on(";").join(pkColumnValues);
-            String saltingPartOfKey = pkColumnValues.get(0);
-
-            // avoid region hot-spotting
-            hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
-            return hbaseRowID;
-        } catch (Exception e) {
-            LOGGER.error("quan-debug:no getPrimaryKeyColumns" + pkColumnNames);
-            return null;
-        }
-
-
+        // avoid region hot-spotting
+        hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
+        return hbaseRowID;
     }
 
     /**

@@ -1,13 +1,14 @@
 package com.booking.replication.queues;
 
+import static com.codahale.metrics.MetricRegistry.name;
+
 import com.booking.replication.Constants;
 import com.booking.replication.Metrics;
-import com.codahale.metrics.Gauge;
 import com.google.code.or.binlog.BinlogEventV4;
 
-import java.util.concurrent.LinkedBlockingQueue;
+import com.codahale.metrics.Gauge;
 
-import static com.codahale.metrics.MetricRegistry.name;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This class is a repository for the queues used by the replicators Pipeline Orchestrator.

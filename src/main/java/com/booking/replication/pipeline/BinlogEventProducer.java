@@ -70,16 +70,13 @@ public class BinlogEventProducer {
 
     private OpenReplicator initOpenReplicator() {
         OpenReplicator openReplicator = new OpenReplicator();
-
-        String[] hostParse = pipelinePosition.getCurrentReplicantHostName().split("\\:");
-
         // config
         openReplicator.setUser(configuration.getReplicantDBUserName());
         openReplicator.setPassword(configuration.getReplicantDBPassword());
-        openReplicator.setPort(Integer.parseInt(hostParse[1]));
+        openReplicator.setPort(configuration.getReplicantPort());
 
         // pool
-        openReplicator.setHost(hostParse[0]);
+        openReplicator.setHost(pipelinePosition.getCurrentReplicantHostName());
         openReplicator.setServerId(serverId);
 
         // disable lv2 buffer

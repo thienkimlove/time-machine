@@ -1,6 +1,7 @@
 package com.booking.replication.util;
 
 import joptsimple.OptionSet;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.LoggerFactory;
 
 /**

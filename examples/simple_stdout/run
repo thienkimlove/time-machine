@@ -1,5 +1,5 @@
 java -jar ../../target/mysql-replicator-0.14.2.jar \
     --applier STDOUT \
     --schema test \
-    --binlog-filename 5860be60b3c4-bin.000001 \
+    --binlog-filename mysql-bin.000001 \
     --config-path  ./simple_stdout.yml

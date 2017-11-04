@@ -3,7 +3,7 @@ replication_schema:
     name: "test"
     username: 'hadoop_repl'
     password: 'password'
-    host_pool: ['localhost:3306']
+    host_pool: ['localhost']
 
 metadata_store:
     host: "localhost"

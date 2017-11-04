@@ -3,7 +3,11 @@ package com.booking.replication.schema.table;
 import com.booking.replication.schema.column.ColumnSchema;
 import com.booking.replication.util.CaseInsensitiveMap;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 
 public class TableSchemaVersion {
