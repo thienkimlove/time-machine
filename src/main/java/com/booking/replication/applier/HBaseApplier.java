@@ -226,7 +226,7 @@ public class HBaseApplier implements Applier {
         String tableName = event.getTableName().toString();
 
         String hbaseTableName = configuration.getHbaseNamespace().toLowerCase()
-                + ":"
+                + "_"
                 + tableName.toLowerCase();
 
         if (! hbaseSchemaManager.isTableKnownToHBase(hbaseTableName)) {
