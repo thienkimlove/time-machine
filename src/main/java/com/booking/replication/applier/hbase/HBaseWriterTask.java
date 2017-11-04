@@ -81,6 +81,7 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
         }
 
         if (chaosMonkey.feelsLikeFailingSubmitedTaskWithoutException()) {
+            System.out.println("quan-debug:feelsLikeFailingSubmitedTaskWithoutException84");
             return new HBaseTaskResult(taskUuid, TaskStatus.WRITE_FAILED, false);
         }
 
@@ -90,10 +91,13 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
             throw new Exception("Chaos monkey exception for task in progress!");
         }
         if (chaosMonkey.feelsLikeFailingTaskInProgessWithoutException()) {
+            System.out.println("quan-debug:feelsLikeFailingTaskInProgessWithoutException94");
             return new HBaseTaskResult(taskUuid, TaskStatus.WRITE_FAILED, false);
         }
 
         for (final String transactionUuid : taskTransactionBuffer.keySet()) {
+
+            System.out.println("quan-debug:before-numberOfTablesInCurrentTransaction");
 
             int numberOfTablesInCurrentTransaction = taskTransactionBuffer.get(transactionUuid).keySet().size();
 
@@ -105,15 +109,20 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                 if (chaosMonkey.feelsLikeThrowingExceptionBeforeFlushingData()) {
                     throw new Exception("Chaos monkey is here to prevent call to flush!!!");
                 } else if (chaosMonkey.feelsLikeFailingDataFlushWithoutException()) {
+                    System.out.println("quan-debug:feelsLikeFailingDataFlushWithoutException112");
                     return new HBaseTaskResult(taskUuid, TaskStatus.WRITE_FAILED, false);
                 } else {
                     List<AugmentedRow> rowOps = taskTransactionBuffer.get(transactionUuid).get(bufferedMySQLTableName);
+
+                    System.out.println("quan-debug:bufferedMySQLTableName117" + bufferedMySQLTableName);
 
                     Map<String, List<HBaseApplierMutationGenerator.PutMutation>> mutationsByTable = mutationGenerator.generateMutations(rowOps).stream()
                             .collect(
                                         Collectors.groupingBy( mutation->mutation.getTable()
                                     )
                             );
+
+                    System.out.println("quan-debug:HBaseApplierMutationGenerator125");
 
                     for (Map.Entry<String, List<HBaseApplierMutationGenerator.PutMutation>> entry : mutationsByTable.entrySet()){
 
