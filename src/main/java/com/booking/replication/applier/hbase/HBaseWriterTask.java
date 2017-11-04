@@ -116,7 +116,7 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
 
                     System.out.println("quan-debug:bufferedMySQLTableName117" + bufferedMySQLTableName);
 
-                    try  {
+                    if (bufferedMySQLTableName != null) {
                         Map<String, List<HBaseApplierMutationGenerator.PutMutation>> mutationsByTable = mutationGenerator.generateMutations(rowOps).stream()
                                 .collect(Collectors.groupingBy(mutation->mutation.getTable()));
 
@@ -156,13 +156,9 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                             }
 
                         }
-
-                    } catch (Exception e) {
-                        System.out.println("quan-debug:bufferedMySQLTableName117" + e.getCause());
+                    } else {
+                        System.out.println("quan-debug:bufferedMySQLTableName is null" + bufferedMySQLTableName);
                     }
-
-
-
 
                 }
             } // next table
