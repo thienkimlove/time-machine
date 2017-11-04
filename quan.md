@@ -179,3 +179,100 @@ java -jar ../../target/mysql-replicator-0.14.2.jar \
     --initial-snapshot
 ```
 6. Wait til it completed.
+
+7. Final
+
+-  We connected direct to master
+
+-  Mysql Configuration as below :
+
+```sql
+[mysqld]
+server_id = 99999
+# Binlog configuration
+log-bin          = mysqlbin
+binlog_format    = ROW
+binlog_row_image = full
+log_slave_updates
+max_binlog_size  = 100M
+
+```
+
+- Create heatbeat database on meta-store-database
+
+```sql
+CREATE TABLE IF NOT EXISTS db_heartbeat (
+    server_id int unsigned NOT NULL,
+    csec bigint unsigned DEFAULT NULL,
+    PRIMARY KEY (server_id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Insert the initial row
+INSERT INTO db_heartbeat VALUES ( @@global.server_id, 100 * UNIX_TIMESTAMP(NOW(2)) );
+
+-- Create the event to update this row every 1s
+DELIMITER $$
+
+CREATE
+  DEFINER=`root`@`localhost`
+  EVENT `db_heartbeat`
+  ON SCHEDULE EVERY 1 SECOND
+  ON COMPLETION PRESERVE ENABLE
+DO
+BEGIN
+  DECLARE result INT;
+  DECLARE CONTINUE HANDLER FOR SQLEXCEPTION BEGIN END;
+  SET innodb_lock_wait_timeout = 1;
+  SET result = GET_LOCK( 'db_heartbeat', 0 );
+  IF result = 1 THEN
+    UPDATE db_heartbeat SET csec=100*UNIX_TIMESTAMP(NOW(2)) WHERE server_id = @@global.server_id;
+    SET result = RELEASE_LOCK( 'db_heartbeat' );
+  END IF;
+END$$db_heartbeat
+DELIMITER ;
+
+```
+
+- First we run with simple STDOUT to see if it can read from bin log or not.
+
+```bash
+java -jar ../../target/mysql-replicator-0.14.2.jar \
+    --applier STDOUT \
+    --schema test \
+    --binlog-filename mysql-bin.000001 \
+    --config-path  ./simple_stdout.yml
+
+```
+- If can not read then we must run bin log flusher to 
+create bin log from beginning so we have `CREATE table`.
+
+```bash
+python data-flusher.py --host=103.7.41.141 --user=root --passwd=tieungao --port=33060
+```
+
+Because it run on master so maybe we need to config more.
+
+Or setup to run on slave.
+
+- After that run the snapshot init
+
+```bash
+java -jar ../../target/mysql-replicator-0.14.2.jar \
+    --schema products \
+    --applier hbase \
+    --binlog-filename mysqlbin.000001 \
+    --config-path  ./hbase_dryrun.yml \
+    --initial-snapshot
+
+```
+
+When it seems finish to create HBase Tables. We stop this.
+
+- Run the replication
+
+```bash
+java -jar ../../target/mysql-replicator-0.14.2.jar \
+    --schema products \
+    --applier hbase \
+    --config-path  ./hbase_dryrun.yml 
+```
