@@ -137,9 +137,11 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                         }
 
                         PerTableMetrics.get(tableName).committed.inc(mutations.size());
-
-                        rowOpsCommittedToHbase.mark(mutations.size());
-
+                        try {
+                            rowOpsCommittedToHbase.mark(mutations.size());
+                        } catch (Exception e) {
+                            System.out.println("quan-debug:rowOpsCommittedToHbase Error" + e.getCause());
+                        }
                     }
 
                 }
