@@ -267,7 +267,8 @@ public class HBaseApplier implements Applier {
                 LOGGER.debug("All tasks have completed!");
                 wait = false;
             } else {
-                resubmitIfThereAreFailedTasks();
+                //resubmitIfThereAreFailedTasks();
+                LOGGER.debug("quan-debug: resubmitIfThereAreFailedTasks have completed!");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {

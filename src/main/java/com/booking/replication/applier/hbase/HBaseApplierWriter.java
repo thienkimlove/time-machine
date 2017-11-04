@@ -453,7 +453,12 @@ public class HBaseApplierWriter {
     public synchronized void updateTaskStatuses() throws ApplierException {
         // Loop submitted tasks
 
+
+        LOGGER.debug("Start to updateTaskStatuses");
+
         for (String submittedTaskUuid : taskTransactionBuffer.keySet()) {
+
+            LOGGER.debug("In taskTransactionBuffer loop");
 
             if (taskTransactionBuffer.get(submittedTaskUuid) == null) {
                 // TODO: this is ugly, find a better way to solve this problem
@@ -556,6 +561,8 @@ public class HBaseApplierWriter {
                 applierTasksFailedCounter.inc();
             }
         }
+
+        LOGGER.debug("End taskTransactionBuffer loop");
     }
 
     /**
