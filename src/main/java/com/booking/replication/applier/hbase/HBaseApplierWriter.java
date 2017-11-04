@@ -22,12 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.codahale.metrics.MetricRegistry.name;
@@ -488,7 +483,7 @@ public class HBaseApplierWriter {
                 if (taskFuture.isDone()) {
                     LOGGER.debug("Task " + submittedTaskUuid + " is done");
 
-                    HBaseTaskResult taskResult = taskFuture.get(); // raise exceptions if any
+                    HBaseTaskResult taskResult = taskFuture.get(5, TimeUnit.SECONDS); // raise exceptions if any
                     boolean taskSucceeded = taskResult.isTaskSucceeded();
 
                     TaskStatus statusOfDoneTask = taskResult.getTaskStatus();
