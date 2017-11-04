@@ -151,7 +151,7 @@ java -jar ../../target/mysql-replicator-0.14.2.jar --applier STDOUT --schema tes
 ```
 
 ```
-java -jar ../../target/mysql-replicator-0.14.2.jar --hbase-namespace ns --applier hbase --config-path ./hbase_dryrun.yml --delta
+java -jar ../../target/mysql-replicator-0.14.2.jar --hbase-namespace today --applier hbase --config-path ./hbase_dryrun.yml --delta
 ```
 
 

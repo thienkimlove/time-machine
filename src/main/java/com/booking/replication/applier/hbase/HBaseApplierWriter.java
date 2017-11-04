@@ -601,7 +601,7 @@ public class HBaseApplierWriter {
                     List<AugmentedRow> bufferedOPS = task.get(transactionUuid).get(tableName);
                     if (bufferedOPS != null && bufferedOPS.size() > 0) {
                         taskHasRows = true;
-                        LOGGER.info("quan-debug:bufferedOPS" + bufferedOPS);
+                        LOGGER.info("quan-debug:bufferedOPS" + bufferedOPS.get(0));
                     } else {
                         LOGGER.info("Table " + tableName + " has no rows!!!");
                     }
@@ -635,6 +635,7 @@ public class HBaseApplierWriter {
                                 DRY_RUN
                         )
                     ));
+                    LOGGER.info("Task is submit to taskPool");
                 } else {
                     LOGGER.error("Task is marked as READY_FOR_PICK_UP, but has no rows");
                     throw new TaskBufferInconsistencyException("Task is marked as READY_FOR_PICK_UP, but has no rows.");
