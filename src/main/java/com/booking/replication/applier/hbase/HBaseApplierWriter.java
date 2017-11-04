@@ -295,6 +295,7 @@ public class HBaseApplierWriter {
                     .get(mySQLTableName)
                     .add(augmentedRow);
             rowsBufferedInCurrentTask.incrementAndGet();
+            LOGGER.info("quan-debug:taskTransactionBuffer" + mySQLTableName + augmentedRow);
         }
     }
 
