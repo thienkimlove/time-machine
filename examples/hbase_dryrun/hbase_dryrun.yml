@@ -8,17 +8,17 @@ metadata_store:
     username: 'root'
     password: 'tieungao'
     host:     'localhost'
-    database: 'bb_stores'
+    database: 'cc_stores'
     file:
-       path: '/tmp/bb_meta.txt'
+       path: '/tmp/cc_meta.txt'
 
 hbase:
-    namespace: 'aa'
+    namespace: 'cc'
     zookeeper_quorum:  ['localhost']
     hive_imports:
-        tables: ['bb_delta']
+        tables: ['cc_delta']
 
 mysql_failover:
      pgtid:
          p_gtid_pattern: '(?<=_pseudo_gtid_hint__asc\:)(.{8}\:.{16}\:.{8})'
-         p_gtid_prefix: "use `bb_stores`;"
+         p_gtid_prefix: "use `cc_stores`;"
