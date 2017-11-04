@@ -108,15 +108,13 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                     List<AugmentedRow> rowOps = taskTransactionBuffer.get(transactionUuid).get(bufferedMySQLTableName);
 
 
-                    System.out.println("quan-debug: Start generate mutation");
-
                     Map<String, List<HBaseApplierMutationGenerator.PutMutation>> mutationsByTable = mutationGenerator.generateMutations(rowOps).stream()
                             .collect(
                                         Collectors.groupingBy( mutation->mutation.getTable()
                                     )
                             );
 
-                    System.out.println("quan-debug: End generate mutation");
+                    System.out.println("quan-debug: Start for loop with HBaseApplierMutationGenerator" + bufferedMySQLTableName);
 
                     for (Map.Entry<String, List<HBaseApplierMutationGenerator.PutMutation>> entry : mutationsByTable.entrySet()){
 
@@ -146,9 +144,13 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                         rowOpsCommittedToHbase.mark(mutations.size());
 
                     }
+                    System.out.println("quan-debug: End for loop with HBaseApplierMutationGenerator" + bufferedMySQLTableName);
 
                 }
             } // next table
+
+            System.out.println("quan-debug: before timerContext");
+
             timerContext.stop();
 
             // data integrity check
@@ -158,7 +160,12 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                         numberOfFlushedTablesInCurrentTransaction));
                 return new HBaseTaskResult(taskUuid, TaskStatus.WRITE_FAILED, false);
             }
+
+            System.out.println("quan-debug: end of Transaction");
+
         } // next transaction
+
+        System.out.println("quan-debug: before taskTimer stop");
 
         taskTimer.stop();
 
