@@ -21,4 +21,4 @@ hbase:
 mysql_failover:
      pgtid:
          p_gtid_pattern: '(?<=_pseudo_gtid_hint__asc\:)(.{8}\:.{16}\:.{8})'
-         p_gtid_prefix: "use `ee_stores`;"
+         p_gtid_prefix: "use `db_meta`;"
