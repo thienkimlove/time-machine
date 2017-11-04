@@ -114,7 +114,7 @@ public class HBaseApplierMutationGenerator {
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
-            LOGGER.info("quan-debug:augmentedRows error");
+            LOGGER.info("quan-debug:augmentedRows error" + e.getMessage());
             return null;
         }
     }
