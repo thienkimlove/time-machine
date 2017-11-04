@@ -107,11 +107,16 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                 } else {
                     List<AugmentedRow> rowOps = taskTransactionBuffer.get(transactionUuid).get(bufferedMySQLTableName);
 
+
+                    System.out.println("quan-debug: Start generate mutation");
+
                     Map<String, List<HBaseApplierMutationGenerator.PutMutation>> mutationsByTable = mutationGenerator.generateMutations(rowOps).stream()
                             .collect(
                                         Collectors.groupingBy( mutation->mutation.getTable()
                                     )
                             );
+
+                    System.out.println("quan-debug: End generate mutation");
 
                     for (Map.Entry<String, List<HBaseApplierMutationGenerator.PutMutation>> entry : mutationsByTable.entrySet()){
 
