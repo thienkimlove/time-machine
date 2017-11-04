@@ -8,17 +8,17 @@ metadata_store:
     username: 'root'
     password: 'tieungao'
     host:     'localhost'
-    database: 'meta_stores'
+    database: 'aa_stores'
     file:
-       path: '/tmp/origin.txt'
+       path: '/tmp/aa_meta.txt'
 
 hbase:
-    namespace: 'qq'
+    namespace: 'aa'
     zookeeper_quorum:  ['localhost']
     hive_imports:
-        tables: ['qq_delta']
+        tables: ['aa_delta']
 
 mysql_failover:
      pgtid:
          p_gtid_pattern: '(?<=_pseudo_gtid_hint__asc\:)(.{8}\:.{16}\:.{8})'
-         p_gtid_prefix: "use `meta_stores`;"
+         p_gtid_prefix: "use `aa_stores`;"
