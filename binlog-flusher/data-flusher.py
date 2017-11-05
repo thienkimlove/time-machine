@@ -172,7 +172,11 @@ class BlackholeCopyMethod(object):
 
     def execute_sql(self, cursor, sql):
         logger.info(sql)
-        return cursor.execute(sql)
+        try:
+            return cursor.execute(sql)
+        except Exception as e:
+            logger.warn("sql error dupdate: " + str(e))
+            return cursor.execute('select 1')
 
     def pre(self, config, tables):
         source = self.conDis.get_source()
