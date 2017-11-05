@@ -371,12 +371,20 @@ public class HBaseApplierMutationGenerator {
             }
         }
 
-        String hbaseRowID = Joiner.on(";").join(pkColumnValues);
-        String saltingPartOfKey = pkColumnValues.get(0);
+        try {
+            String hbaseRowID = Joiner.on(";").join(pkColumnValues);
+            String saltingPartOfKey = pkColumnValues.get(0);
 
-        // avoid region hot-spotting
-        hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
-        return hbaseRowID;
+            // avoid region hot-spotting
+            hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
+            return hbaseRowID;
+        } catch (Exception e) {
+            LOGGER.info("Error with pkColumnValues :" + pkColumnValues);
+            LOGGER.info(e.getMessage());
+            return null;
+        }
+
+
     }
 
     /**

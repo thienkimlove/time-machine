@@ -224,7 +224,6 @@ public class Converter {
             LongColumn lc = (LongColumn) column;
             if (columnSchema.getDataType().equals("int")) {
                 boolean isUnsigned = isUnsignedPattern.matcher(columnSchema.getColumnType()).find();
-                LOGGER.info("Column is in and unsigned?" + columnSchema);
                 if (isUnsigned) {
                     byte[] bytes = ByteBuffer.allocate(4).putInt(lc.getValue()).array();
                     BigInteger big = new BigInteger(1,bytes);
