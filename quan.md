@@ -722,5 +722,33 @@ ALTER TABLE conversation_tags
 DROP FOREIGN KEY 'conversation_tags_ibfk_1';
 ```
 
+So we have 3 problems when import database to HBase
+
+1. error on contrain key name  = key name in mysql table (Must remove it)
+
+2. 2 table `checksums` and `task_result` have problem with 
+
+```text
+jdbc4.MySQL Data Exception: '4.294967295E9'  is outside valid range for the datatype INTEGER
+https://issues.apache.org/jira/browse/SQOOP-341
+```
+
+Currently i just drop those tables.
+
+3. Problem with no PK column (Seems that we have many data in bin log, which about some table already deleted)
+
+current if not have hbaseRowId 
+
+```text
+ Long columnTimestampforRowKey = row.getEventV4Header().getTimestamp();
+        // RowID
+        String hbaseRowID = getHBaseRowKey(row);
+
+        if (hbaseRowID == null) {
+            hbaseRowID = "undefined" + columnTimestampforRowKey;
+        }
+
+```
+
 
 Next we must continue with `git@github.com:mysql-time-machine/hbase-snapshotter.git`
