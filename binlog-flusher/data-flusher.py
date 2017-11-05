@@ -452,11 +452,6 @@ def run(user, passwd, host, port, db, table, method, stop_slave, start_slave, sk
     tables = flusher.get_tables(conDis, config)
     source = conDis.get_source()
     cursor = source.cursor()
-
-    sql = 'SET FOREIGN_KEY_CHECKS=0;'
-    logger.info(sql)
-    cursor.execute(sql)
-
     if stop_slave:
         sql = 'stop slave'
         logger.info(sql)
@@ -472,12 +467,6 @@ def run(user, passwd, host, port, db, table, method, stop_slave, start_slave, sk
     if start_slave:
         sql = 'start slave'
         logger.info(sql)
-        cursor.execute(sql)
-
-    sql = 'SET FOREIGN_KEY_CHECKS=1;'
-    logger.info(sql)
-    cursor.execute(sql)
-
     sys.exit(main.retcode())
 
 if __name__ == '__main__':
