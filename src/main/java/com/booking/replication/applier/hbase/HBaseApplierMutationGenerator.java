@@ -380,8 +380,10 @@ public class HBaseApplierMutationGenerator {
             return hbaseRowID;
         } catch (Exception e) {
             LOGGER.info("Error with pkColumnValues :" + pkColumnValues);
+            LOGGER.info("Error with pkColumnNames :" + pkColumnNames);
+            LOGGER.info("Error with row :" + row);
             LOGGER.info(e.getMessage());
-            return null;
+            System.exit(0);
         }
 
 
