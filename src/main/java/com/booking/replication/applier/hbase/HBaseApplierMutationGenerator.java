@@ -383,10 +383,8 @@ public class HBaseApplierMutationGenerator {
             LOGGER.info("Error with pkColumnNames :" + pkColumnNames);
             LOGGER.info("Error with row :" + row);
             LOGGER.info(e.getMessage());
-            System.exit(0);
+            return null;
         }
-
-
     }
 
     /**
