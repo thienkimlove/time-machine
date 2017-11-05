@@ -90,9 +90,11 @@ public class MysqlActiveSchemaVersion implements ActiveSchemaVersion {
             //  - get and cache its create statement
             //  - create and initialize TableSchemaVersion object
             for (String tableName : tableNames) {
+                LOGGER.info("Work with table name:" + tableName);
                 if (lastReceivedDDL == null) {
                     // replicator is starting
                     loadAndCacheTableSchemaInfo(con, tableName);
+
                 } else {
                     if (!skipLoadTable(tableName, lastReceivedDDL)) {
                         loadAndCacheTableSchemaInfo(con, tableName);
