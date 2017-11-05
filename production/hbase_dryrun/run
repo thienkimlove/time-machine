@@ -1,0 +1,4 @@
+java -jar ../../target/mysql-replicator-0.14.2.jar \
+    --schema live_warehouse_v2 \
+    --applier hbase \
+    --config-path  ./hbase_dryrun.yml \

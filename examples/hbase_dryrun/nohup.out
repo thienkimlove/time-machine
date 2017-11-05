@@ -1,0 +1,570 @@
+----------------------------------------------
+Parsed params:           
+	config-path:           ./hbase_dryrun.yml
+	schema:                products
+	applier:               hbase
+	binlog-filename:       null
+	position:              4
+	last-binlog-filename:  null
+	initial-snapshot:      false
+	hbase-namespace:       null
+	dry-run:               false
+----------------------------------------------
+
+com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.EmitterException: expected NodeEvent, but got <com.fasterxml.jackson.dataformat.yaml.snakeyaml.events.DocumentEndEvent()>
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter.expectNode(Emitter.java:408)
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter.access$1600(Emitter.java:62)
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter$ExpectBlockMappingKey.expect(Emitter.java:631)
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter.emit(Emitter.java:216)
+	at com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.close(YAMLGenerator.java:359)
+	at com.fasterxml.jackson.databind.ObjectMapper._configAndWriteValue(ObjectMapper.java:3572)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:2927)
+	at com.booking.replication.Configuration.toString(Configuration.java:344)
+	at com.booking.replication.Main.main(Main.java:52)
+05-11-2017 03:19:11 INFO  log:186 - Logging initialized @597ms
+05-11-2017 03:19:11 INFO  EmbeddedJettyServer:125 - == Spark has ignited ...
+05-11-2017 03:19:11 INFO  EmbeddedJettyServer:126 - >> Listening on 0.0.0.0:8080
+05-11-2017 03:19:11 INFO  Server:345 - jetty-9.3.z-SNAPSHOT
+05-11-2017 03:19:11 INFO  ServerConnector:270 - Started ServerConnector@1067294f{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+05-11-2017 03:19:11 INFO  Server:397 - Started @705ms
+05-11-2017 03:19:12 INFO  Coordinator:38 - Got checkpoint: {"checkpointType":2,"hostName":"103.7.41.141","slaveId":99999,"lastVerifiedBinlogFileName":"mysqlbin.000001","lastVerifiedBinlogPosition":219,"pseudoGTID":null,"pseudoGTIDFullQuery":null,"fakeMicrosecondCounter":0}
+05-11-2017 03:19:12 WARN  Replicator:130 - PsuedoGTID not available in safe checkpoint. Defaulting back to host-specific binlog coordinates.
+05-11-2017 03:19:12 INFO  Replicator:228 - Starting replication from: mysqlbin.000001 219
+05-11-2017 03:19:12 INFO  BinlogEventProducer:125 - Changing binlog position from: 4 to: 219
+05-11-2017 03:19:12 INFO  BinlogEventProducer:120 - Changing binlog filename from: null to: mysqlbin.000001
+05-11-2017 03:19:12 WARN  NativeCodeLoader:62 - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+05-11-2017 03:19:13 INFO  RecoverableZooKeeper:121 - Process identifier=hconnection-0x7690781 connecting to ZooKeeper ensemble=localhost:2181
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:zookeeper.version=3.4.6-1569965, built on 02/20/2014 09:09 GMT
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:host.name=ubuntu.ubuntu
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:java.version=1.8.0_131
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:java.vendor=Oracle Corporation
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:java.home=/usr/lib/jvm/java-8-openjdk-amd64/jre
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:java.class.path=../../target/mysql-replicator-0.14.2.jar
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:java.io.tmpdir=/tmp
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:java.compiler=<NA>
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:os.name=Linux
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:os.arch=amd64
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:os.version=4.4.0-91-generic
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:user.name=root
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:user.home=/root
+05-11-2017 03:19:13 INFO  ZooKeeper:100 - Client environment:user.dir=/opt/Docker/applierdb/time-machine/examples/hbase_dryrun
+05-11-2017 03:19:13 INFO  ZooKeeper:438 - Initiating client connection, connectString=localhost:2181 sessionTimeout=90000 watcher=hconnection-0x76907810x0, quorum=localhost:2181, baseZNode=/hbase
+05-11-2017 03:19:13 INFO  ClientCnxn:975 - Opening socket connection to server localhost/0:0:0:0:0:0:0:1:2181. Will not attempt to authenticate using SASL (unknown error)
+05-11-2017 03:19:13 INFO  ClientCnxn:852 - Socket connection established to localhost/0:0:0:0:0:0:0:1:2181, initiating session
+05-11-2017 03:19:13 INFO  ClientCnxn:1235 - Session establishment complete on server localhost/0:0:0:0:0:0:0:1:2181, sessionid = 0x15f87781d3f0041, negotiated timeout = 90000
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 03:19:13 INFO  RecoverableZooKeeper:121 - Process identifier=hconnection-0x58e1d9d connecting to ZooKeeper ensemble=localhost:2181
+05-11-2017 03:19:13 INFO  ZooKeeper:438 - Initiating client connection, connectString=localhost:2181 sessionTimeout=90000 watcher=hconnection-0x58e1d9d0x0, quorum=localhost:2181, baseZNode=/hbase
+05-11-2017 03:19:13 INFO  ClientCnxn:975 - Opening socket connection to server localhost/0:0:0:0:0:0:0:1:2181. Will not attempt to authenticate using SASL (unknown error)
+05-11-2017 03:19:13 INFO  ClientCnxn:852 - Socket connection established to localhost/0:0:0:0:0:0:0:1:2181, initiating session
+05-11-2017 03:19:13 INFO  ClientCnxn:1235 - Session establishment complete on server localhost/0:0:0:0:0:0:0:1:2181, sessionid = 0x15f87781d3f0042, negotiated timeout = 90000
+05-11-2017 03:19:13 INFO  HBaseSchemaManager:63 - HBaseSchemaManager successfully established connection to HBase.
+05-11-2017 03:19:13 INFO  MysqlActiveSchemaVersion:76 - Successfully loaded ActiveSchemaVersion
+05-11-2017 03:19:13 INFO  PipelineOrchestrator:128 - Created consumer with binlog position => {  binlogFileName => mysqlbin.000001, binlogPosition => 219 }
+05-11-2017 03:19:13 INFO  BinlogEventProducer:134 - Starting producer from: { binlog-file => mysqlbin.000001, position => 219 }
+05-11-2017 03:19:13 INFO  TransportImpl:67 - connecting to host: 103.7.41.141, port: 33060
+05-11-2017 03:19:13 INFO  TransportImpl:100 - connected to host: 103.7.41.141, port: 33060, context: AbstractTransport.Context[threadId=39,scramble=^GLYc*vbPLiZqDDyF?,protocolVersion=10,serverHost=103.7.41.141,serverPort=33060,serverStatus=2,serverCollation=8,serverVersion=5.7.19-17-log,serverCapabilities=65535]
+05-11-2017 03:19:13 INFO  AuthenticatorImpl:63 - start to login, user: root, host: 103.7.41.141, port: 33060
+05-11-2017 03:19:13 INFO  AuthenticatorImpl:95 - login successfully, user: root, detail: OKPacket[packetMarker=0,affectedRows=0,insertId=0,serverStatus=2,warningCount=0,message=<null>]
+05-11-2017 03:19:13 INFO  PipelineOrchestrator:234 - quan-debug:processQueueLoop
+05-11-2017 03:19:13 INFO  PipelineOrchestrator:470 - Event position { binlog-filename => mysqlbin.000001, binlog-position => -119 } is lower or equal then last safe checkpoint position {  binlog-filename => mysqlbin.000001, binlog-position => 219 }. Skipping event...
+05-11-2017 03:19:13 INFO  PipelineOrchestrator:470 - Event position { binlog-filename => mysqlbin.000001, binlog-position => 219 } is lower or equal then last safe checkpoint position {  binlog-filename => mysqlbin.000001, binlog-position => 219 }. Skipping event...
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 03:19:14 INFO  HBaseApplierWriter:629 - Submitting task 3a62a069-ffee-45a2-8bbc-9da9017f0ce0
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 03:19:44 INFO  HBaseApplierWriter:629 - Submitting task 2f6a43e8-ca8b-4cc9-b18e-65166d4a28bd
+05-11-2017 03:19:44 WARN  HBaseApplierWriter:516 - Task 2f6a43e8-ca8b-4cc9-b18e-65166d4a28bd failed. Task will be retried.
+05-11-2017 03:19:44 INFO  HBaseApplierWriter:629 - Submitting task 2f6a43e8-ca8b-4cc9-b18e-65166d4a28bd
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 03:20:47 INFO  HBaseApplierWriter:629 - Submitting task 7bcbba3c-b600-40af-9b8d-7f4e7e8639e3
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 03:26:26 INFO  HBaseApplierWriter:629 - Submitting task 39aa227d-6948-4fe5-9c0c-20ecbcb1bf1e
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+05-11-2017 03:30:01 WARN  PipelineOrchestrator:524 - No Db name in Query Event. Extracted SQL: CREATE TABLE `products`.`migrations` (`batch` int, `id` bigint, `migration` text)
+05-11-2017 03:30:01 WARN  PipelineOrchestrator:531 - DDL statement CREATE TABLE `products`.`migrations` (`batch` int, `id` bigint, `migration` text) on non-replicated database: 
+05-11-2017 03:30:01 INFO  HBaseSchemaManager:87 - table hh_migrations does not exist in HBase. Creating...
+05-11-2017 03:30:02 ERROR PipelineOrchestrator:702 - Failed to commit transaction: uuid: 9704f02f-c5b5-4307-ac36-e2b46bf11652, xid: 388, tableID2Name: {224=migrations}, tableID2DBName: {224=products}, beginBinlogFileName: mysqlbin.000001, beginBinlogPosition: 4645, events size: 2, beginEvent: QueryEvent[header=BinlogEventV4HeaderImpl[timestamp=1509827159000003,eventType=2,serverId=99999,eventLength=68,nextPosition=4713,flags=8,timestampOfReceipt=1509827401689],threadId=3,elapsedTime=0,databaseNameLength=0,errorCode=0,statusVariablesLength=26,statusVariables=[QFlags2Code[flags=0], QSQLModeCode[sqlMode=1077936128], QCatalogNzCode[catalogName=std], QCharsetCode[characterSetClient=33,collationConnection=33,collationServer=8]],databaseName=,sql=BEGIN], finishEvent: XidEvent[header=BinlogEventV4HeaderImpl[timestamp=1509827159000003,eventType=16,serverId=99999,eventLength=31,nextPosition=4890,flags=0,timestampOfReceipt=1509827401690],xid=388], events:
+    - TableMapEvent[header=BinlogEventV4HeaderImpl[timestamp=1509827159000003,eventType=19,serverId=99999,eventLength=60,nextPosition=4773,flags=0,timestampOfReceipt=1509827401689],tableId=224,reserved=1,databaseNameLength=8,databaseName=products,tableNameLength=10,tableName=migrations,columnCount=3,columnTypes=[3, 8, -4],columnMetadataCount=1,columnMetadata=Metadata[metadata=[0, 0, 2]],columnNullabilities=111]
+    - WriteRowsEventV2[header=BinlogEventV4HeaderImpl[timestamp=1509827159000003,eventType=30,serverId=99999,eventLength=86,nextPosition=4859,flags=0,timestampOfReceipt=1509827401689],tableId=224,reserved=1,extraInfoLength=2,extraInfo=<null>,columnCount=3,usedColumns=111,rows=[Row[columns=[1, 1, BlobColumn[value=[B@64a3b4ee]]]]]
+com.booking.replication.pipeline.event.handler.EventHandlerApplyException: Failed to apply event: 
+	at com.booking.replication.pipeline.event.handler.EventDispatcher.apply(EventDispatcher.java:45)
+	at com.booking.replication.pipeline.PipelineOrchestrator.applyTransactionDataEvents(PipelineOrchestrator.java:721)
+	at com.booking.replication.pipeline.PipelineOrchestrator.commitTransaction(PipelineOrchestrator.java:698)
+	at com.booking.replication.pipeline.PipelineOrchestrator.commitTransaction(PipelineOrchestrator.java:675)
+	at com.booking.replication.pipeline.event.handler.XidEventHandler.handle(XidEventHandler.java:45)
+	at com.booking.replication.pipeline.event.handler.EventDispatcher.handle(EventDispatcher.java:54)
+	at com.booking.replication.pipeline.PipelineOrchestrator.calculateAndPropagateChanges(PipelineOrchestrator.java:441)
+	at com.booking.replication.pipeline.PipelineOrchestrator.processEvent(PipelineOrchestrator.java:296)
+	at com.booking.replication.pipeline.PipelineOrchestrator.processQueueLoop(PipelineOrchestrator.java:277)
+	at com.booking.replication.pipeline.PipelineOrchestrator.processQueueLoop(PipelineOrchestrator.java:258)
+	at com.booking.replication.pipeline.PipelineOrchestrator.run(PipelineOrchestrator.java:236)
+Caused by: com.booking.replication.schema.exception.TableMapException: Table schema not initialized for table migrations. Cant proceed.
+Binlog Position: 4773
+	at com.booking.replication.augmenter.EventAugmenter.augmentWriteRowsEventV2(EventAugmenter.java:266)
+	at com.booking.replication.augmenter.EventAugmenter.mapDataEventToSchema(EventAugmenter.java:159)
+	at com.booking.replication.pipeline.event.handler.WriteRowsEventHandler.apply(WriteRowsEventHandler.java:37)
+	at com.booking.replication.pipeline.event.handler.EventDispatcher.apply(EventDispatcher.java:43)
+	... 10 more
+05-11-2017 03:30:03 INFO  Replicator:305 - Executing replicator shutdown hook...
+05-11-2017 03:30:03 INFO  Replicator:308 - Stopping Overseer...
+05-11-2017 03:30:04 INFO  Replicator:312 - Overseer thread successfully stopped
+05-11-2017 03:30:04 INFO  Replicator:322 - Stopping Producer...
+05-11-2017 03:30:04 INFO  BinlogEventProducer:140 - Stopping producer. Start point was: { binlog-file => mysqlbin.000001, position => 219 }
+05-11-2017 03:30:04 INFO  TransportImpl:121 - disconnected from 103.7.41.141:33060
+05-11-2017 03:30:04 ERROR AbstractBinlogParser:267 - failed to parse binlog
+java.net.SocketException: Socket closed
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at com.google.code.or.io.impl.XInputStreamImpl.doFill(XInputStreamImpl.java:237)
+	at com.google.code.or.io.impl.XInputStreamImpl.read(XInputStreamImpl.java:214)
+	at com.google.code.or.net.impl.TransportInputStreamImpl.read(TransportInputStreamImpl.java:88)
+	at com.google.code.or.io.impl.XInputStreamImpl.readInt(XInputStreamImpl.java:142)
+	at com.google.code.or.io.impl.XInputStreamImpl.readInt(XInputStreamImpl.java:62)
+	at com.google.code.or.net.impl.TransportInputStreamImpl.readPacketHeader(TransportInputStreamImpl.java:72)
+	at com.google.code.or.net.impl.TransportInputStreamImpl.read(TransportInputStreamImpl.java:86)
+	at com.google.code.or.io.impl.XInputStreamImpl.readInt(XInputStreamImpl.java:142)
+	at com.google.code.or.io.impl.XInputStreamImpl.readInt(XInputStreamImpl.java:62)
+	at com.google.code.or.binlog.impl.ReplicationBasedBinlogParser.readPacketMarker(ReplicationBasedBinlogParser.java:86)
+	at com.google.code.or.binlog.impl.ReplicationBasedBinlogParser.doParse(ReplicationBasedBinlogParser.java:112)
+	at com.google.code.or.binlog.impl.AbstractBinlogParser$Task.run(AbstractBinlogParser.java:263)
+	at java.lang.Thread.run(Thread.java:748)
+05-11-2017 03:30:04 INFO  Replicator:325 - Successfully stopped Producer thread
+05-11-2017 03:30:04 INFO  Replicator:339 - Stopping Pipeline Orchestrator...
+05-11-2017 03:30:04 INFO  Replicator:342 - Pipeline Orchestrator successfully stopped
+05-11-2017 03:30:04 INFO  Replicator:351 - Stopping the Spark web server...
+05-11-2017 03:30:04 INFO  EmbeddedJettyServer:142 - >>> Spark shutting down ...
+05-11-2017 03:30:04 INFO  ServerConnector:310 - Stopped ServerConnector@1067294f{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+05-11-2017 03:30:04 INFO  EmbeddedJettyServer:151 - done
+05-11-2017 03:30:04 INFO  Replicator:353 - Stopped the Spark web server...
+----------------------------------------------
+Parsed params:           
+	config-path:           ./hbase_dryrun.yml
+	schema:                products
+	applier:               hbase
+	binlog-filename:       null
+	position:              4
+	last-binlog-filename:  null
+	initial-snapshot:      false
+	hbase-namespace:       null
+	dry-run:               false
+----------------------------------------------
+
+com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.EmitterException: expected NodeEvent, but got <com.fasterxml.jackson.dataformat.yaml.snakeyaml.events.DocumentEndEvent()>
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter.expectNode(Emitter.java:408)
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter.access$1600(Emitter.java:62)
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter$ExpectBlockMappingKey.expect(Emitter.java:631)
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter.emit(Emitter.java:216)
+	at com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.close(YAMLGenerator.java:359)
+	at com.fasterxml.jackson.databind.ObjectMapper._configAndWriteValue(ObjectMapper.java:3572)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:2927)
+	at com.booking.replication.Configuration.toString(Configuration.java:344)
+	at com.booking.replication.Main.main(Main.java:52)
+05-11-2017 03:34:46 INFO  log:186 - Logging initialized @614ms
+05-11-2017 03:34:46 INFO  EmbeddedJettyServer:125 - == Spark has ignited ...
+05-11-2017 03:34:46 INFO  EmbeddedJettyServer:126 - >> Listening on 0.0.0.0:8080
+05-11-2017 03:34:46 INFO  Server:345 - jetty-9.3.z-SNAPSHOT
+05-11-2017 03:34:46 INFO  ServerConnector:270 - Started ServerConnector@1067294f{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+05-11-2017 03:34:46 INFO  Server:397 - Started @699ms
+05-11-2017 03:34:47 INFO  Coordinator:38 - Got checkpoint: {"checkpointType":2,"hostName":"103.7.41.141","slaveId":99999,"lastVerifiedBinlogFileName":"mysqlbin.000001","lastVerifiedBinlogPosition":566,"pseudoGTID":null,"pseudoGTIDFullQuery":null,"fakeMicrosecondCounter":0}
+05-11-2017 03:34:47 WARN  Replicator:130 - PsuedoGTID not available in safe checkpoint. Defaulting back to host-specific binlog coordinates.
+05-11-2017 03:34:47 INFO  Replicator:228 - Starting replication from: mysqlbin.000001 566
+05-11-2017 03:34:47 INFO  BinlogEventProducer:125 - Changing binlog position from: 4 to: 566
+05-11-2017 03:34:47 INFO  BinlogEventProducer:120 - Changing binlog filename from: null to: mysqlbin.000001
+05-11-2017 03:34:48 WARN  NativeCodeLoader:62 - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+05-11-2017 03:34:48 INFO  RecoverableZooKeeper:121 - Process identifier=hconnection-0x7690781 connecting to ZooKeeper ensemble=localhost:2181
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:zookeeper.version=3.4.6-1569965, built on 02/20/2014 09:09 GMT
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:host.name=ubuntu.ubuntu
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:java.version=1.8.0_131
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:java.vendor=Oracle Corporation
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:java.home=/usr/lib/jvm/java-8-openjdk-amd64/jre
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:java.class.path=../../target/mysql-replicator-0.14.2.jar
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:java.io.tmpdir=/tmp
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:java.compiler=<NA>
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:os.name=Linux
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:os.arch=amd64
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:os.version=4.4.0-91-generic
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:user.name=root
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:user.home=/root
+05-11-2017 03:34:48 INFO  ZooKeeper:100 - Client environment:user.dir=/opt/Docker/applierdb/time-machine/examples/hbase_dryrun
+05-11-2017 03:34:48 INFO  ZooKeeper:438 - Initiating client connection, connectString=localhost:2181 sessionTimeout=90000 watcher=hconnection-0x76907810x0, quorum=localhost:2181, baseZNode=/hbase
+05-11-2017 03:34:48 INFO  ClientCnxn:975 - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+05-11-2017 03:34:48 INFO  ClientCnxn:852 - Socket connection established to localhost/127.0.0.1:2181, initiating session
+05-11-2017 03:34:48 INFO  ClientCnxn:1235 - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x15f87781d3f0049, negotiated timeout = 90000
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 03:34:48 INFO  RecoverableZooKeeper:121 - Process identifier=hconnection-0x58e1d9d connecting to ZooKeeper ensemble=localhost:2181
+05-11-2017 03:34:48 INFO  ZooKeeper:438 - Initiating client connection, connectString=localhost:2181 sessionTimeout=90000 watcher=hconnection-0x58e1d9d0x0, quorum=localhost:2181, baseZNode=/hbase
+05-11-2017 03:34:48 INFO  ClientCnxn:975 - Opening socket connection to server localhost/0:0:0:0:0:0:0:1:2181. Will not attempt to authenticate using SASL (unknown error)
+05-11-2017 03:34:48 INFO  ClientCnxn:852 - Socket connection established to localhost/0:0:0:0:0:0:0:1:2181, initiating session
+05-11-2017 03:34:48 INFO  ClientCnxn:1235 - Session establishment complete on server localhost/0:0:0:0:0:0:0:1:2181, sessionid = 0x15f87781d3f004a, negotiated timeout = 90000
+05-11-2017 03:34:48 INFO  HBaseSchemaManager:63 - HBaseSchemaManager successfully established connection to HBase.
+05-11-2017 03:34:48 INFO  MysqlActiveSchemaVersion:76 - Successfully loaded ActiveSchemaVersion
+05-11-2017 03:34:48 INFO  PipelineOrchestrator:128 - Created consumer with binlog position => {  binlogFileName => mysqlbin.000001, binlogPosition => 566 }
+05-11-2017 03:34:48 INFO  BinlogEventProducer:134 - Starting producer from: { binlog-file => mysqlbin.000001, position => 566 }
+05-11-2017 03:34:48 INFO  TransportImpl:67 - connecting to host: 103.7.41.141, port: 33060
+05-11-2017 03:34:48 INFO  TransportImpl:100 - connected to host: 103.7.41.141, port: 33060, context: AbstractTransport.Context[threadId=60,scramble=O?YJ|YQ|D[B,protocolVersion=10,serverHost=103.7.41.141,serverPort=33060,serverStatus=2,serverCollation=8,serverVersion=5.7.19-17-log,serverCapabilities=65535]
+05-11-2017 03:34:48 INFO  AuthenticatorImpl:63 - start to login, user: root, host: 103.7.41.141, port: 33060
+05-11-2017 03:34:48 INFO  AuthenticatorImpl:95 - login successfully, user: root, detail: OKPacket[packetMarker=0,affectedRows=0,insertId=0,serverStatus=2,warningCount=0,message=<null>]
+05-11-2017 03:34:48 INFO  PipelineOrchestrator:234 - quan-debug:processQueueLoop
+05-11-2017 03:34:49 INFO  PipelineOrchestrator:470 - Event position { binlog-filename => mysqlbin.000001, binlog-position => -119 } is lower or equal then last safe checkpoint position {  binlog-filename => mysqlbin.000001, binlog-position => 566 }. Skipping event...
+05-11-2017 03:34:49 INFO  PipelineOrchestrator:470 - Event position { binlog-filename => mysqlbin.000001, binlog-position => 566 } is lower or equal then last safe checkpoint position {  binlog-filename => mysqlbin.000001, binlog-position => 566 }. Skipping event...
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 03:34:49 INFO  HBaseApplierWriter:629 - Submitting task a7a52bb8-191a-4a87-b7af-7d641e71174d
+quan-debug: Start for loop with HBaseApplierMutationGeneratormigrations
+quan-debug: End for loop with HBaseApplierMutationGeneratormigrations
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 03:35:19 INFO  HBaseApplierWriter:629 - Submitting task f624ebbd-7632-416e-8b95-eef318628744
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 03:37:10 INFO  HBaseApplierWriter:629 - Submitting task 3c66dbcc-8915-47e2-abac-65243bcfa491
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+05-11-2017 03:50:02 WARN  QueryEventParser:105 - unknown status variable type: 16
+05-11-2017 03:50:03 WARN  PipelineOrchestrator:524 - No Db name in Query Event. Extracted SQL: CREATE TABLE `products`.`banners` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `image` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `link` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+05-11-2017 03:50:03 WARN  PipelineOrchestrator:531 - DDL statement CREATE TABLE `products`.`banners` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `image` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  `position` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `link` varchar(191) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci on non-replicated database: 
+05-11-2017 03:51:02 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 03:51:36 INFO  MatcherFilter:152 - The requested route [/HNAP1/] has not been mapped in Spark
+05-11-2017 03:54:05 INFO  HBaseSchemaManager:87 - table hh_banners does not exist in HBase. Creating...
+05-11-2017 03:54:06 ERROR PipelineOrchestrator:702 - Failed to commit transaction: uuid: 691d430b-9fbd-4b54-98fc-a2451cbd5a43, xid: 903, tableID2Name: {233=banners}, tableID2DBName: {233=products}, beginBinlogFileName: mysqlbin.000001, beginBinlogPosition: 4842, events size: 2, beginEvent: QueryEvent[header=BinlogEventV4HeaderImpl[timestamp=1509828602000003,eventType=2,serverId=99999,eventLength=84,nextPosition=4926,flags=8,timestampOfReceipt=1509828844989],threadId=4,elapsedTime=0,databaseNameLength=8,errorCode=0,statusVariablesLength=34,statusVariables=[QFlags2Code[flags=0], QSQLModeCode[sqlMode=1077936128], QCatalogNzCode[catalogName=std], QCharsetCode[characterSetClient=33,collationConnection=33,collationServer=8], QTimeZoneCode[timeZone=SYSTEM]],databaseName=products,sql=BEGIN], finishEvent: XidEvent[header=BinlogEventV4HeaderImpl[timestamp=1509828602000003,eventType=16,serverId=99999,eventLength=31,nextPosition=5086,flags=0,timestampOfReceipt=1509828844991],xid=903], events:
+    - TableMapEvent[header=BinlogEventV4HeaderImpl[timestamp=1509828602000003,eventType=19,serverId=99999,eventLength=65,nextPosition=4991,flags=0,timestampOfReceipt=1509828844989],tableId=233,reserved=1,databaseNameLength=8,databaseName=products,tableNameLength=7,tableName=banners,columnCount=6,columnTypes=[3, 15, 3, 17, 17, 15],columnMetadataCount=6,columnMetadata=Metadata[metadata=[0, 573, 0, 0, 0, 573]],columnNullabilities=011000]
+    - WriteRowsEventV2[header=BinlogEventV4HeaderImpl[timestamp=1509828602000003,eventType=30,serverId=99999,eventLength=64,nextPosition=5055,flags=0,timestampOfReceipt=1509828844990],tableId=233,reserved=1,extraInfoLength=2,extraInfo=<null>,columnCount=6,usedColumns=111111,rows=[Row[columns=[11, test, 2, 2017-11-05 03:50:02.0, 2017-11-05 03:50:02.0, link]]]]
+com.booking.replication.pipeline.event.handler.EventHandlerApplyException: Failed to apply event: 
+	at com.booking.replication.pipeline.event.handler.EventDispatcher.apply(EventDispatcher.java:45)
+	at com.booking.replication.pipeline.PipelineOrchestrator.applyTransactionDataEvents(PipelineOrchestrator.java:721)
+	at com.booking.replication.pipeline.PipelineOrchestrator.commitTransaction(PipelineOrchestrator.java:698)
+	at com.booking.replication.pipeline.PipelineOrchestrator.commitTransaction(PipelineOrchestrator.java:675)
+	at com.booking.replication.pipeline.event.handler.XidEventHandler.handle(XidEventHandler.java:45)
+	at com.booking.replication.pipeline.event.handler.EventDispatcher.handle(EventDispatcher.java:54)
+	at com.booking.replication.pipeline.PipelineOrchestrator.calculateAndPropagateChanges(PipelineOrchestrator.java:441)
+	at com.booking.replication.pipeline.PipelineOrchestrator.processEvent(PipelineOrchestrator.java:296)
+	at com.booking.replication.pipeline.PipelineOrchestrator.processQueueLoop(PipelineOrchestrator.java:277)
+	at com.booking.replication.pipeline.PipelineOrchestrator.processQueueLoop(PipelineOrchestrator.java:258)
+	at com.booking.replication.pipeline.PipelineOrchestrator.run(PipelineOrchestrator.java:236)
+Caused by: com.booking.replication.schema.exception.TableMapException: Table schema not initialized for table banners. Cant proceed.
+Binlog Position: 4991
+	at com.booking.replication.augmenter.EventAugmenter.augmentWriteRowsEventV2(EventAugmenter.java:266)
+	at com.booking.replication.augmenter.EventAugmenter.mapDataEventToSchema(EventAugmenter.java:159)
+	at com.booking.replication.pipeline.event.handler.WriteRowsEventHandler.apply(WriteRowsEventHandler.java:37)
+	at com.booking.replication.pipeline.event.handler.EventDispatcher.apply(EventDispatcher.java:43)
+	... 10 more
+05-11-2017 03:54:06 INFO  Replicator:305 - Executing replicator shutdown hook...
+05-11-2017 03:54:06 INFO  Replicator:308 - Stopping Overseer...
+05-11-2017 03:54:07 INFO  Replicator:312 - Overseer thread successfully stopped
+05-11-2017 03:54:07 INFO  Replicator:322 - Stopping Producer...
+05-11-2017 03:54:07 INFO  BinlogEventProducer:140 - Stopping producer. Start point was: { binlog-file => mysqlbin.000001, position => 566 }
+05-11-2017 03:54:07 INFO  TransportImpl:121 - disconnected from 103.7.41.141:33060
+05-11-2017 03:54:07 ERROR AbstractBinlogParser:267 - failed to parse binlog
+java.net.SocketException: Socket closed
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at com.google.code.or.io.impl.XInputStreamImpl.doFill(XInputStreamImpl.java:237)
+	at com.google.code.or.io.impl.XInputStreamImpl.read(XInputStreamImpl.java:214)
+	at com.google.code.or.net.impl.TransportInputStreamImpl.read(TransportInputStreamImpl.java:88)
+	at com.google.code.or.io.impl.XInputStreamImpl.readInt(XInputStreamImpl.java:142)
+	at com.google.code.or.io.impl.XInputStreamImpl.readInt(XInputStreamImpl.java:62)
+	at com.google.code.or.net.impl.TransportInputStreamImpl.readPacketHeader(TransportInputStreamImpl.java:72)
+	at com.google.code.or.net.impl.TransportInputStreamImpl.read(TransportInputStreamImpl.java:86)
+	at com.google.code.or.io.impl.XInputStreamImpl.readInt(XInputStreamImpl.java:142)
+	at com.google.code.or.io.impl.XInputStreamImpl.readInt(XInputStreamImpl.java:62)
+	at com.google.code.or.binlog.impl.ReplicationBasedBinlogParser.readPacketMarker(ReplicationBasedBinlogParser.java:86)
+	at com.google.code.or.binlog.impl.ReplicationBasedBinlogParser.doParse(ReplicationBasedBinlogParser.java:112)
+	at com.google.code.or.binlog.impl.AbstractBinlogParser$Task.run(AbstractBinlogParser.java:263)
+	at java.lang.Thread.run(Thread.java:748)
+05-11-2017 03:54:07 INFO  Replicator:325 - Successfully stopped Producer thread
+05-11-2017 03:54:07 INFO  Replicator:339 - Stopping Pipeline Orchestrator...
+05-11-2017 03:54:07 INFO  Replicator:342 - Pipeline Orchestrator successfully stopped
+05-11-2017 03:54:07 INFO  Replicator:351 - Stopping the Spark web server...
+05-11-2017 03:54:07 INFO  EmbeddedJettyServer:142 - >>> Spark shutting down ...
+05-11-2017 03:54:07 INFO  ServerConnector:310 - Stopped ServerConnector@1067294f{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+05-11-2017 03:54:07 INFO  EmbeddedJettyServer:151 - done
+05-11-2017 03:54:07 INFO  Replicator:353 - Stopped the Spark web server...
+----------------------------------------------
+Parsed params:           
+	config-path:           ./hbase_dryrun.yml
+	schema:                products
+	applier:               hbase
+	binlog-filename:       null
+	position:              4
+	last-binlog-filename:  null
+	initial-snapshot:      false
+	hbase-namespace:       null
+	dry-run:               false
+----------------------------------------------
+
+com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.EmitterException: expected NodeEvent, but got <com.fasterxml.jackson.dataformat.yaml.snakeyaml.events.DocumentEndEvent()>
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter.expectNode(Emitter.java:408)
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter.access$1600(Emitter.java:62)
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter$ExpectBlockMappingKey.expect(Emitter.java:631)
+	at com.fasterxml.jackson.dataformat.yaml.snakeyaml.emitter.Emitter.emit(Emitter.java:216)
+	at com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.close(YAMLGenerator.java:359)
+	at com.fasterxml.jackson.databind.ObjectMapper._configAndWriteValue(ObjectMapper.java:3572)
+	at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:2927)
+	at com.booking.replication.Configuration.toString(Configuration.java:344)
+	at com.booking.replication.Main.main(Main.java:52)
+05-11-2017 04:00:57 INFO  log:186 - Logging initialized @602ms
+05-11-2017 04:00:57 INFO  EmbeddedJettyServer:125 - == Spark has ignited ...
+05-11-2017 04:00:57 INFO  EmbeddedJettyServer:126 - >> Listening on 0.0.0.0:8080
+05-11-2017 04:00:57 INFO  Server:345 - jetty-9.3.z-SNAPSHOT
+05-11-2017 04:00:57 INFO  ServerConnector:270 - Started ServerConnector@1067294f{HTTP/1.1,[http/1.1]}{0.0.0.0:8080}
+05-11-2017 04:00:57 INFO  Server:397 - Started @711ms
+05-11-2017 04:00:58 INFO  Coordinator:38 - Got checkpoint: {"checkpointType":2,"hostName":"103.7.41.141","slaveId":99999,"lastVerifiedBinlogFileName":"mysqlbin.000001","lastVerifiedBinlogPosition":1129,"pseudoGTID":null,"pseudoGTIDFullQuery":null,"fakeMicrosecondCounter":1}
+05-11-2017 04:00:58 WARN  Replicator:130 - PsuedoGTID not available in safe checkpoint. Defaulting back to host-specific binlog coordinates.
+05-11-2017 04:00:58 INFO  Replicator:228 - Starting replication from: mysqlbin.000001 1129
+05-11-2017 04:00:58 INFO  BinlogEventProducer:125 - Changing binlog position from: 4 to: 1129
+05-11-2017 04:00:58 INFO  BinlogEventProducer:120 - Changing binlog filename from: null to: mysqlbin.000001
+05-11-2017 04:00:58 WARN  NativeCodeLoader:62 - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+05-11-2017 04:00:58 INFO  RecoverableZooKeeper:121 - Process identifier=hconnection-0x7690781 connecting to ZooKeeper ensemble=localhost:2181
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:zookeeper.version=3.4.6-1569965, built on 02/20/2014 09:09 GMT
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:host.name=ubuntu.ubuntu
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:java.version=1.8.0_131
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:java.vendor=Oracle Corporation
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:java.home=/usr/lib/jvm/java-8-openjdk-amd64/jre
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:java.class.path=../../target/mysql-replicator-0.14.2.jar
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:java.library.path=/usr/java/packages/lib/amd64:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:java.io.tmpdir=/tmp
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:java.compiler=<NA>
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:os.name=Linux
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:os.arch=amd64
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:os.version=4.4.0-91-generic
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:user.name=root
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:user.home=/root
+05-11-2017 04:00:58 INFO  ZooKeeper:100 - Client environment:user.dir=/opt/Docker/applierdb/time-machine/examples/hbase_dryrun
+05-11-2017 04:00:58 INFO  ZooKeeper:438 - Initiating client connection, connectString=localhost:2181 sessionTimeout=90000 watcher=hconnection-0x76907810x0, quorum=localhost:2181, baseZNode=/hbase
+05-11-2017 04:00:58 INFO  ClientCnxn:975 - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+05-11-2017 04:00:59 INFO  ClientCnxn:852 - Socket connection established to localhost/127.0.0.1:2181, initiating session
+05-11-2017 04:00:59 INFO  ClientCnxn:1235 - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x15f87781d3f0051, negotiated timeout = 90000
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 04:00:59 INFO  RecoverableZooKeeper:121 - Process identifier=hconnection-0x58e1d9d connecting to ZooKeeper ensemble=localhost:2181
+05-11-2017 04:00:59 INFO  ZooKeeper:438 - Initiating client connection, connectString=localhost:2181 sessionTimeout=90000 watcher=hconnection-0x58e1d9d0x0, quorum=localhost:2181, baseZNode=/hbase
+05-11-2017 04:00:59 INFO  ClientCnxn:975 - Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error)
+05-11-2017 04:00:59 INFO  ClientCnxn:852 - Socket connection established to localhost/127.0.0.1:2181, initiating session
+05-11-2017 04:00:59 INFO  ClientCnxn:1235 - Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x15f87781d3f0052, negotiated timeout = 90000
+05-11-2017 04:00:59 INFO  HBaseSchemaManager:63 - HBaseSchemaManager successfully established connection to HBase.
+05-11-2017 04:00:59 INFO  MysqlActiveSchemaVersion:76 - Successfully loaded ActiveSchemaVersion
+05-11-2017 04:00:59 INFO  PipelineOrchestrator:128 - Created consumer with binlog position => {  binlogFileName => mysqlbin.000001, binlogPosition => 1129 }
+05-11-2017 04:00:59 INFO  BinlogEventProducer:134 - Starting producer from: { binlog-file => mysqlbin.000001, position => 1129 }
+05-11-2017 04:00:59 INFO  TransportImpl:67 - connecting to host: 103.7.41.141, port: 33060
+05-11-2017 04:00:59 INFO  TransportImpl:100 - connected to host: 103.7.41.141, port: 33060, context: AbstractTransport.Context[threadId=82,scramble=tN{	3bB7V7n(lWPm3 F,protocolVersion=10,serverHost=103.7.41.141,serverPort=33060,serverStatus=2,serverCollation=8,serverVersion=5.7.19-17-log,serverCapabilities=65535]
+05-11-2017 04:00:59 INFO  AuthenticatorImpl:63 - start to login, user: root, host: 103.7.41.141, port: 33060
+05-11-2017 04:00:59 INFO  AuthenticatorImpl:95 - login successfully, user: root, detail: OKPacket[packetMarker=0,affectedRows=0,insertId=0,serverStatus=2,warningCount=0,message=<null>]
+05-11-2017 04:00:59 INFO  PipelineOrchestrator:234 - quan-debug:processQueueLoop
+05-11-2017 04:00:59 INFO  PipelineOrchestrator:470 - Event position { binlog-filename => mysqlbin.000001, binlog-position => -119 } is lower or equal then last safe checkpoint position {  binlog-filename => mysqlbin.000001, binlog-position => 1129 }. Skipping event...
+05-11-2017 04:00:59 INFO  PipelineOrchestrator:470 - Event position { binlog-filename => mysqlbin.000001, binlog-position => 1129 } is lower or equal then last safe checkpoint position {  binlog-filename => mysqlbin.000001, binlog-position => 1129 }. Skipping event...
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 04:01:00 INFO  HBaseApplierWriter:629 - Submitting task c4563040-2553-4985-924b-38c9f9397921
+quan-debug: Start for loop with HBaseApplierMutationGeneratorusers
+quan-debug: End for loop with HBaseApplierMutationGeneratorusers
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 04:01:30 INFO  HBaseApplierWriter:629 - Submitting task 6390d238-a808-4a1a-82f8-e1c46383c47c
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratormigrations
+quan-debug: End for loop with HBaseApplierMutationGeneratormigrations
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorbanners
+quan-debug: End for loop with HBaseApplierMutationGeneratorbanners
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+05-11-2017 04:02:18 WARN  QueryEventParser:105 - unknown status variable type: 16
+05-11-2017 04:02:18 INFO  MysqlActiveSchemaVersion:242 - Try DDL
+05-11-2017 04:02:18 INFO  MysqlActiveSchemaVersion:277 - GOT DDL => CREATE TABLE categories (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `template` int(11) NOT NULL DEFAULT '1',
+  `slug` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `display_homepage_1` tinyint(1) NOT NULL DEFAULT '0',
+  `display_homepage_2` tinyint(1) NOT NULL DEFAULT '0',
+  `display_homepage_3` tinyint(1) NOT NULL DEFAULT '0',
+  `display_homepage_0` tinyint(1) NOT NULL DEFAULT '0',
+  `display_below` tinyint(1) NOT NULL DEFAULT '0',
+  `seo_name` varchar(191) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `seo_desc` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `categories_slug_unique` (`slug`),
+  KEY `categories_parent_id_index` (`parent_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+05-11-2017 04:02:18 INFO  MysqlActiveSchemaVersion:302 - Successfully altered active schema
+05-11-2017 04:02:18 INFO  MysqlActiveSchemaVersion:306 - Successfully loaded new active schema version
+05-11-2017 04:02:18 INFO  QueryEventHandler:93 - Save new marker: {"checkpointType":2,"hostName":"103.7.41.141","slaveId":99999,"lastVerifiedBinlogFileName":"mysqlbin.000001","lastVerifiedBinlogPosition":4899,"pseudoGTID":null,"pseudoGTIDFullQuery":null,"fakeMicrosecondCounter":0}
+05-11-2017 04:02:18 INFO  FileCoordinator:55 - Serialized checkpoint: {"checkpointType":2,"hostName":"103.7.41.141","slaveId":99999,"lastVerifiedBinlogFileName":"mysqlbin.000001","lastVerifiedBinlogPosition":4899,"pseudoGTID":null,"pseudoGTIDFullQuery":null,"fakeMicrosecondCounter":0}
+05-11-2017 04:02:18 INFO  HBaseSchemaManager:228 - Table schema_history_hh already exists in HBase. Probably a case of replaying the binlog.
+05-11-2017 04:06:57 INFO  HBaseSchemaManager:87 - table hh_categories does not exist in HBase. Creating...
+quan-debug:READY_FOR_BUFFERING
+quan-debug:null
+05-11-2017 04:07:28 INFO  HBaseApplierWriter:629 - Submitting task 5b6c68e4-8f07-41cc-b56e-26f1b9b32fde
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: Start for loop with HBaseApplierMutationGeneratorcategories
+quan-debug: End for loop with HBaseApplierMutationGeneratorcategories
+quan-debug: before timerContext
+quan-debug: end of Transaction
+quan-debug: before taskTimer stop
+quan-debug: after taskTimer stop
+quan-debug: No dryrun
+quan-debug: have variable test
+05-11-2017 04:10:10 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 04:26:30 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 05:44:01 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 07:43:21 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 07:43:27 WARN  HttpParser:1662 - Illegal character 0x0 in state=HEADER_VALUE for buffer HeapByteBuffer@626126f5[p=99,l=103,c=8192,r=4]={POST / HTTP/1.1\r\n...: 0\r\nReferer: \x00<<<\r\n\r\n>>>nsfer-Encoding: c...\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00}
+05-11-2017 07:43:27 WARN  HttpParser:1286 - bad HTTP parsed: 400 Illegal character 0x0 for HttpChannelOverHttp@1760adcc{r=0,c=false,a=IDLE,uri=null}
+05-11-2017 07:43:32 INFO  MatcherFilter:152 - The requested route [/favicon.ico] has not been mapped in Spark
+05-11-2017 07:49:52 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 07:59:45 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 09:46:08 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 09:53:11 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 10:18:11 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 10:51:36 INFO  MatcherFilter:152 - The requested route [/manager/html] has not been mapped in Spark
+05-11-2017 11:57:23 INFO  MatcherFilter:152 - The requested route [/favicon.ico] has not been mapped in Spark
+05-11-2017 11:57:39 INFO  MatcherFilter:152 - The requested route [/index.action] has not been mapped in Spark
+05-11-2017 11:59:21 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 11:59:46 INFO  MatcherFilter:152 - The requested route [/HNAP1/] has not been mapped in Spark
+05-11-2017 13:10:52 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 13:27:04 INFO  MatcherFilter:152 - The requested route [/manager/html] has not been mapped in Spark
+05-11-2017 15:15:52 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 16:44:59 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 18:00:34 INFO  MatcherFilter:152 - The requested route [/index.action] has not been mapped in Spark
+05-11-2017 18:01:24 INFO  MatcherFilter:152 - The requested route [/index.action] has not been mapped in Spark
+05-11-2017 18:01:34 INFO  MatcherFilter:152 - The requested route [/index.action] has not been mapped in Spark
+05-11-2017 18:01:37 INFO  MatcherFilter:152 - The requested route [/index.action] has not been mapped in Spark
+05-11-2017 18:01:38 INFO  MatcherFilter:152 - The requested route [/index.action] has not been mapped in Spark
+05-11-2017 18:11:44 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 19:08:38 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 19:09:03 INFO  MatcherFilter:152 - The requested route [/HNAP1/] has not been mapped in Spark
+05-11-2017 19:17:23 INFO  MatcherFilter:152 - The requested route [/manager/html] has not been mapped in Spark
+05-11-2017 19:33:44 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 19:59:43 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark
+05-11-2017 20:48:23 INFO  MatcherFilter:152 - The requested route [/] has not been mapped in Spark

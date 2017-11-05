@@ -1,0 +1,24 @@
+replication_schema:
+   name:      'live_warehouse_v2'
+   username:  'root'
+   password:  'tieungao'
+   host_pool: ['localhost']
+
+metadata_store:
+    username: 'root'
+    password: 'tieungao'
+    host:     'localhost'
+    database: 'hh_stores'
+    file:
+       path: '/tmp/hh_meta.txt'
+
+hbase:
+    namespace: 'hh'
+    zookeeper_quorum:  ['localhost']
+    hive_imports:
+        tables: ['hh_delta']
+
+mysql_failover:
+     pgtid:
+         p_gtid_pattern: '(?<=_pseudo_gtid_hint__asc\:)(.{8}\:.{16}\:.{8})'
+         p_gtid_prefix: "use `db_meta`;"

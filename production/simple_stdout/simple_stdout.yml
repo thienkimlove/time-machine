@@ -1,14 +1,14 @@
 replication_schema:
-    name:      'products'
+    name:      'live_warehouse_v2'
     username:  'root'
     password:  'tieungao'
-    host_pool: ['103.7.41.141']
+    host_pool: ['localhost']
 
 metadata_store:
     username: 'root'
     password: 'tieungao'
     host:     'localhost'
-    database: 'hh_stores'
+    database: 'hh_simple_stores'
     file:
         path: '/tmp/hh_simple_meta.txt'
 

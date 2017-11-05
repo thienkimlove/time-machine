@@ -1,5 +1,5 @@
 java -jar ../../target/mysql-replicator-0.14.2.jar \
     --applier STDOUT \
-    --schema products \
-    --binlog-filename mysqlbin.000001 \
+    --schema live_warehouse_v2 \
+    --binlog-filename mysql-bin.000001 \
     --config-path  ./simple_stdout.yml
