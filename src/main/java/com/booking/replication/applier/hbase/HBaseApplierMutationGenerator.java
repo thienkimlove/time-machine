@@ -118,8 +118,13 @@ public class HBaseApplierMutationGenerator {
 
     private PutMutation getPutForMirroredTable(AugmentedRow row) {
 
+        Long columnTimestampforRowKey = row.getEventV4Header().getTimestamp();
         // RowID
         String hbaseRowID = getHBaseRowKey(row);
+
+        if (hbaseRowID == null) {
+            hbaseRowID = "undefined" + columnTimestampforRowKey;
+        }
 
         String hbaseTableName =
                 configuration.getHbaseNamespace() + "_" + row.getTableName().toLowerCase();
@@ -223,11 +228,16 @@ public class HBaseApplierMutationGenerator {
 
     private PutMutation getPutForDeltaTable(AugmentedRow row) {
 
+        Long    timestampMicroSec = row.getEventV4Header().getTimestamp();
+
         String hbaseRowID = getHBaseRowKey(row);
+
+        if (hbaseRowID == null) {
+            hbaseRowID = "un_defined" + timestampMicroSec;
+        }
 
         // String  replicantSchema   = configuration.getReplicantSchemaName().toLowerCase();
         String  mySQLTableName    = row.getTableName();
-        Long    timestampMicroSec = row.getEventV4Header().getTimestamp();
         boolean isInitialSnapshot = configuration.isInitialSnapshotMode();
 
         String deltaTableName = TableNameMapper.getCurrentDeltaTableName(
