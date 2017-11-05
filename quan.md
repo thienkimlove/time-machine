@@ -706,5 +706,21 @@ Running in Server
 - **Sqoop2** : run `sqoop.sh server start` and shell `sqoop2-shell`
 
 
+### when work with database and using binlog flusher
+
+```bash
+ python data-flusher.py --host=localhost --user=root --passwd=tieungao --port=3306 --db=live_warehouse_v2
+
+python db-recovery.py --mycnf /etc/mysql/my.cnf  --db live_warehouse_v2  --host localhost --hashfile /opt/time-machine/binlog-flusher/tmp/flusherHash-2017-11-05-23-19.txt
+
+```
+
+Mysql Drop Contraint 
+
+```sql
+ALTER TABLE conversation_tags
+DROP FOREIGN KEY 'conversation_tags_ibfk_1';
+```
+
 
 Next we must continue with `git@github.com:mysql-time-machine/hbase-snapshotter.git`
