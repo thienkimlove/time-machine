@@ -172,11 +172,7 @@ class BlackholeCopyMethod(object):
 
     def execute_sql(self, cursor, sql):
         logger.info(sql)
-        try:
-            return cursor.execute(sql)
-        except Exception as e:
-            logger.warn("sql error dupdate: " + str(e))
-            return cursor.execute('select 1')
+        return cursor.execute(sql)
 
     def pre(self, config, tables):
         source = self.conDis.get_source()
@@ -486,7 +482,7 @@ def run(user, passwd, host, port, db, table, method, stop_slave, start_slave, sk
 
 if __name__ == '__main__':
     logger = logging.getLogger('dataFlusher')
-    curTime = datetime.now()
+    curTime = datetime.now().strftime("%Y-%m-%d-%H-%M")
     hdlr = logging.FileHandler('tmp/dataFlusher-%s.log' % curTime)
     hashmapFileName = 'tmp/flusherHash-%s.txt' % curTime
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
