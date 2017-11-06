@@ -231,7 +231,11 @@ public class Converter {
                     //return Long.toString(((long) lc.getValue()) & 0xffffffffL);
                 } else {
                     // Default OpenReplicator/Java behaviour (signed numbers)
-                    return lc.toString();
+                    //return lc.toString();
+                    //fix error with bigInt
+                    byte[] bytes = ByteBuffer.allocate(4).putInt(lc.getValue()).array();
+                    BigInteger big = new BigInteger(1,bytes);
+                    return big.toString();
                 }
             } else {
                 throw new TableMapException("Unknown MySQL type in the event" + column.getClass() + " Object = " + column);

@@ -389,7 +389,7 @@ public class HBaseApplierMutationGenerator {
             hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
             return hbaseRowID;
         } catch (Exception e) {
-            LOGGER.info("quan-debug: No PrimaryKeyColumns" + row.toJson());
+            //LOGGER.info("quan-debug: No PrimaryKeyColumns" + row.toJson());
             return null;
         }
     }
