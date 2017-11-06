@@ -284,6 +284,9 @@ public class MysqlActiveSchemaVersion implements ActiveSchemaVersion {
             // applyAugmentedRowsEvent DDL
             con = activeSchemaDataSource.getConnection();
 
+            Statement setSqlMode = con.createStatement();
+            setSqlMode.execute("SET sql_mode = 'ALLOW_INVALID_DATES';");
+
             if (sequence.containsKey("timezonePre")) {
                 Statement timezonePre = con.createStatement();
                 timezonePre.execute(sequence.get("timezonePre"));

@@ -58,3 +58,6 @@ ALTER TABLE `live_warehouse_v2`.`stocks` DROP FOREIGN KEY `in_stock_products_pro
 ALTER TABLE `live_warehouse_v2`.`stocks` DROP FOREIGN KEY `in_stock_products_store_id_foreign`;
 ALTER TABLE `live_warehouse_v2`.`store_user` DROP FOREIGN KEY `store_user_store_id_foreign`;
 ALTER TABLE `live_warehouse_v2`.`store_user` DROP FOREIGN KEY `store_user_user_id_foreign`;
+
+ALTER TABLE `live_warehouse_v2`.`export_trackings`
+  CHANGE COLUMN `request_export_time` `request_export_time` TIMESTAMP NULL DEFAULT NULL ;
