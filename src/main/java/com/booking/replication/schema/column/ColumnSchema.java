@@ -30,7 +30,7 @@ public class ColumnSchema {
         this.setNullable(tableInfoResultSet.getBoolean("IS_NULLABLE"));
         this.setOrdinalPosition(tableInfoResultSet.getInt("ORDINAL_POSITION"));
         this.setCharacterSetName(tableInfoResultSet.getString("CHARACTER_SET_NAME"));
-        this.setCharacterMaximumLength(tableInfoResultSet.getInt("CHARACTER_MAXIMUM_LENGTH"));
+        //this.setCharacterMaximumLength(tableInfoResultSet.getInt("CHARACTER_MAXIMUM_LENGTH"));
 
     }
 
