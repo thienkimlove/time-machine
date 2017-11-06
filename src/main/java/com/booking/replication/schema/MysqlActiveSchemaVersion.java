@@ -172,13 +172,20 @@ public class MysqlActiveSchemaVersion implements ActiveSchemaVersion {
 
             if (getTableInfoResultSet.getString("DATA_TYPE").equals("enum")) {
                 columnSchema = new EnumColumnSchema(getTableInfoResultSet);
+                this.activeSchemaTables.get(tableName).addColumn(columnSchema);
             } else if (getTableInfoResultSet.getString("DATA_TYPE").equals("set")) {
                 columnSchema = new SetColumnSchema(getTableInfoResultSet);
+                this.activeSchemaTables.get(tableName).addColumn(columnSchema);
             } else {
-                columnSchema = new ColumnSchema(getTableInfoResultSet);
-            }
+                try {
+                    columnSchema = new ColumnSchema(getTableInfoResultSet);
+                    this.activeSchemaTables.get(tableName).addColumn(columnSchema);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("ERROR: could not getInt " + getTableInfoResultSet);
+                }
 
-            this.activeSchemaTables.get(tableName).addColumn(columnSchema);
+            }
         }
         getTableInfoResultSet.close();
         getTableInfoStatement.close();
