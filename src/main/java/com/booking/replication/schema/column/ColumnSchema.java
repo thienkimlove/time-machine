@@ -2,6 +2,7 @@ package com.booking.replication.schema.column;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 /**
  * Created by bosko on 11/6/15.
@@ -29,7 +30,13 @@ public class ColumnSchema {
         this.setNullable(tableInfoResultSet.getBoolean("IS_NULLABLE"));
         this.setOrdinalPosition(tableInfoResultSet.getInt("ORDINAL_POSITION"));
         this.setCharacterSetName(tableInfoResultSet.getString("CHARACTER_SET_NAME"));
-        this.setCharacterMaximumLength(tableInfoResultSet.getInt("CHARACTER_MAXIMUM_LENGTH"));
+        try {
+            this.setCharacterMaximumLength(tableInfoResultSet.getInt("CHARACTER_MAXIMUM_LENGTH"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ERROR: could not getInt " + tableInfoResultSet);
+        }
+
     }
 
     public String getColumnKey() {
