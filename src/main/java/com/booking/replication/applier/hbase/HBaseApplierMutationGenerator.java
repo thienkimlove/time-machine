@@ -118,13 +118,9 @@ public class HBaseApplierMutationGenerator {
 
     private PutMutation getPutForMirroredTable(AugmentedRow row) {
 
-        Long columnTimestampforRowKey = row.getEventV4Header().getTimestamp();
+
         // RowID
         String hbaseRowID = getHBaseRowKey(row);
-
-        if (hbaseRowID == null) {
-            hbaseRowID = "undefined" + columnTimestampforRowKey;
-        }
 
         String hbaseTableName =
                 configuration.getHbaseNamespace() + "_" + row.getTableName().toLowerCase();
@@ -228,17 +224,14 @@ public class HBaseApplierMutationGenerator {
 
     private PutMutation getPutForDeltaTable(AugmentedRow row) {
 
-        Long    timestampMicroSec = row.getEventV4Header().getTimestamp();
 
         String hbaseRowID = getHBaseRowKey(row);
-
-        if (hbaseRowID == null) {
-            hbaseRowID = "undefined" + timestampMicroSec;
-        }
 
         // String  replicantSchema   = configuration.getReplicantSchemaName().toLowerCase();
         String  mySQLTableName    = row.getTableName();
         boolean isInitialSnapshot = configuration.isInitialSnapshotMode();
+
+        Long    timestampMicroSec = row.getEventV4Header().getTimestamp();
 
         String deltaTableName = TableNameMapper.getCurrentDeltaTableName(
                 timestampMicroSec,
@@ -390,7 +383,11 @@ public class HBaseApplierMutationGenerator {
             return hbaseRowID;
         } catch (Exception e) {
             //LOGGER.info("quan-debug: No PrimaryKeyColumns" + row.toJson());
-            return null;
+            String hbaseRowID = UUID.randomUUID().toString();
+            String saltingPartOfKey = "undefined";
+            // avoid region hot-spotting
+            hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
+            return hbaseRowID;
         }
     }
 
