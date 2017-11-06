@@ -225,10 +225,15 @@ public class Converter {
             if (columnSchema.getDataType().equals("int")) {
                 boolean isUnsigned = isUnsignedPattern.matcher(columnSchema.getColumnType()).find();
                 if (isUnsigned) {
-                    byte[] bytes = ByteBuffer.allocate(4).putInt(lc.getValue()).array();
+                    //byte[] bytes = ByteBuffer.allocate(4).putInt(lc.getValue()).array();
+                    //BigInteger big = new BigInteger(1,bytes);
+                    //return big.toString();
+                    //return Long.toString(((long) lc.getValue()) & 0xffffffffL);
+
+                    byte[] bytes = ByteBuffer.allocate(8).putLong(lc.getValue()).array();
                     BigInteger big = new BigInteger(1,bytes);
                     return big.toString();
-                    //return Long.toString(((long) lc.getValue()) & 0xffffffffL);
+
                 } else {
                     // Default OpenReplicator/Java behaviour (signed numbers)
                     //return lc.toString();
