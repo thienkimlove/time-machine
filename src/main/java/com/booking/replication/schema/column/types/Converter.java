@@ -251,7 +251,11 @@ public class Converter {
                     return big.toString();
                 } else {
                     // Default OpenReplicator/Java behaviour (signed numbers)
-                    return llc.toString();
+                    //return llc.toString();
+                    //fix error with bigInt
+                    byte[] bytes = ByteBuffer.allocate(8).putLong(llc.getValue()).array();
+                    BigInteger big = new BigInteger(1,bytes);
+                    return big.toString();
                 }
             } else {
                 throw new TableMapException("Unknown"
