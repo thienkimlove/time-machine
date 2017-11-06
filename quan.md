@@ -437,7 +437,7 @@ build/env/bin/supervisor
 
 1. Start setup on MasterDB
 
-```text
+```uastcontextlanguage
 server-id		= 1
 # in /var/lib/mysql/mysql-bin.xxx
 log_bin			= mysql-bin
@@ -482,7 +482,7 @@ service mysql stop
 
 Edit Mysql Configuration 
 
-```text
+```uastcontextlanguage
 
 server-id               = 101
 binlog-format           = ROW
@@ -498,7 +498,7 @@ binlog_do_db            = live_warehouse_v2
 
 Dum Mysql from master
 
-```bash
+```uastcontextlanguage
 mysqldump --skip-lock-tables -uroot -ptieungao --single-transaction --flush-logs --hex-blob --master-data=2 live_warehouse_v2 > /tmp/slave.sql
 head slave.sql -n80 | grep "MASTER_LOG_POS"
 - CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000004', MASTER_LOG_POS=154;
@@ -528,7 +528,7 @@ drop_all '.*'
 
 1. Hadoop (`http://www.bogotobogo.com/Hadoop/BigData_hadoop_Install_on_ubuntu_16_04_single_node_cluster.php`)
 
-```text
+```uastcontextlanguage
 wget http://mirror.downloadvn.com/apache/hadoop/common/hadoop-2.8.1/hadoop-2.8.1.tar.gz
 sudo ln -s /opt/hadoop-2.8.1 /usr/local/hadoop
 vim /usr/local/hadoop/etc/hadoop/hadoop-env.sh
@@ -616,7 +616,7 @@ http://103.21.150.80:50070
 
 2. Install Hive (`https://hadoop7.wordpress.com/2017/01/27/installing-hive-on-ubuntu-16-04/`)
 
-```text
+```uastcontextlanguage
 wget http://mirror.downloadvn.com/apache/hive/stable-2/apache-hive-2.1.1-bin.tar.gz
 sudo ln -s /opt/apache-hive-2.1.1-bin /usr/local/hive
 hdfs dfs -mkdir -p /user/hive/warehouse
@@ -715,46 +715,41 @@ Running in Server
 
 ### when work with database and using binlog flusher
 
-```bash
- python data-flusher.py --host=localhost --user=root --passwd=tieungao --port=3306 --db=live_warehouse_v2
+```uastcontextlanguage
+python data-flusher.py --host=localhost --user=root --passwd=tieungao --port=3306 --db=live_warehouse_v2
 
-python db-recovery.py --mycnf /etc/mysql/my.cnf  --db live_warehouse_v2  --host localhost --hashfile /opt/time-machine/binlog-flusher/tmp/flusherHash-2017-11-05-23-19.txt
-
-```
-
-Mysql Drop Contraint 
-
-```sql
-ALTER TABLE conversation_tags
-DROP FOREIGN KEY 'conversation_tags_ibfk_1';
-
+python db-recovery.py --mycnf /etc/mysql/my.cnf \
+ --db live_warehouse_v2  --host localhost \
+ --hashfile /opt/time-machine/binlog-flusher/tmp/flusherHash-2017-11-05-23-19.txt
 
 ```
 
-So we have 3 problems when import database to HBase
+#### Latest Bugs and Fix.
 
-1. error on contrain key name  = key name in mysql table (Must remove it)
+* Error on constraint key duplicate in MyQql table (We fix by remove all constraint keys)
 
-```sql
-
-SELECT concat('ALTER TABLE ', '`live_warehouse_v2`.`', TABLE_NAME, '`', ' DROP FOREIGN KEY ', '`', CONSTRAINT_NAME, '`', ';')  FROM information_schema.TABLE_CONSTRAINTS where TABLE_SCHEMA = 'live_warehouse_v2' and CONSTRAINT_TYPE = 'FOREIGN KEY'
-
+```uastcontextlanguage
+SELECT concat('ALTER TABLE ', '`live_warehouse_v2`.`', TABLE_NAME, '`', ' DROP FOREIGN KEY ', '`', CONSTRAINT_NAME, '`', ';')  
+FROM information_schema.TABLE_CONSTRAINTS 
+where TABLE_SCHEMA = 'live_warehouse_v2' 
+and CONSTRAINT_TYPE = 'FOREIGN KEY'
 ```
 
-2. 2 table `checksums` and `task_result` have problem with 
+* 2 table `checksums` and `task_result` have error 
 
-```text
-jdbc4.MySQL Data Exception: '4.294967295E9'  is outside valid range for the datatype INTEGER
-https://issues.apache.org/jira/browse/SQOOP-341
-```
+`jdbc4.MySQL Data Exception: '4.294967295E9'  is outside valid range for the datatype INTEGER`
+Currently fix by comment line 33 in `public class ColumnSchema`.
 
-Currently i just drop those tables.
+* Problem with no PK-column (Seems that we have rows in BinLog about some tables already deleted). 
 
-3. Problem with no PK column (Seems that we have many data in bin log, which about some table already deleted)
+This because of `binlog_do_db` in MySQL Configuration as 
 
-current if not have hbaseRowId 
+`https://www.percona.com/blog/2009/05/14/why-mysqls-binlog-do-db-option-is-dangerous/`
 
-```text
+current fix by generate `hBaseRowId` 
+
+```uastcontextlanguage
+
  Long columnTimestampforRowKey = row.getEventV4Header().getTimestamp();
         // RowID
         String hbaseRowID = getHBaseRowKey(row);
@@ -764,6 +759,19 @@ current if not have hbaseRowId
         }
 
 ```
+
+* Problem with Invalid default datetime for `timestamp` column.
+
+```uastcontextlanguage
+
+#add in MysqlActiveSchemaVersion
+
+Statement setSqlMode = con.createStatement();
+setSqlMode.execute("SET sql_mode = 'ALLOW_INVALID_DATES';");
+
+```
+
+
 
 
 Next we must continue with `git@github.com:mysql-time-machine/hbase-snapshotter.git`

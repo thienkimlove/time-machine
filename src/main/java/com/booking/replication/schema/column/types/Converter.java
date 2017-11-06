@@ -38,7 +38,7 @@ public class Converter {
     // calls toString. Later if needed some type specific processing
     // can be added
     public static String  orTypeToString(Column column, ColumnSchema columnSchema)
-        throws TableMapException {
+            throws TableMapException {
 
         // ================================================================
         // Bit
@@ -225,22 +225,13 @@ public class Converter {
             if (columnSchema.getDataType().equals("int")) {
                 boolean isUnsigned = isUnsignedPattern.matcher(columnSchema.getColumnType()).find();
                 if (isUnsigned) {
-                    //byte[] bytes = ByteBuffer.allocate(4).putInt(lc.getValue()).array();
-                    //BigInteger big = new BigInteger(1,bytes);
-                    //return big.toString();
-                    //return Long.toString(((long) lc.getValue()) & 0xffffffffL);
-
-                    byte[] bytes = ByteBuffer.allocate(8).putLong(lc.getValue()).array();
-                    BigInteger big = new BigInteger(1,bytes);
-                    return big.toString();
-
-                } else {
-                    // Default OpenReplicator/Java behaviour (signed numbers)
-                    //return lc.toString();
-                    //fix error with bigInt
                     byte[] bytes = ByteBuffer.allocate(4).putInt(lc.getValue()).array();
                     BigInteger big = new BigInteger(1,bytes);
                     return big.toString();
+                    //return Long.toString(((long) lc.getValue()) & 0xffffffffL);
+                } else {
+                    // Default OpenReplicator/Java behaviour (signed numbers)
+                    return lc.toString();
                 }
             } else {
                 throw new TableMapException("Unknown MySQL type in the event" + column.getClass() + " Object = " + column);
@@ -256,11 +247,7 @@ public class Converter {
                     return big.toString();
                 } else {
                     // Default OpenReplicator/Java behaviour (signed numbers)
-                    //return llc.toString();
-                    //fix error with bigInt
-                    byte[] bytes = ByteBuffer.allocate(8).putLong(llc.getValue()).array();
-                    BigInteger big = new BigInteger(1,bytes);
-                    return big.toString();
+                    return llc.toString();
                 }
             } else {
                 throw new TableMapException("Unknown"
