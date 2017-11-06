@@ -114,8 +114,6 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                                     )
                             );
 
-                    System.out.println("quan-debug: Start for loop with HBaseApplierMutationGenerator" + bufferedMySQLTableName);
-
                     for (Map.Entry<String, List<HBaseApplierMutationGenerator.PutMutation>> entry : mutationsByTable.entrySet()){
 
                         String tableName = entry.getKey();
@@ -144,12 +142,10 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                         rowOpsCommittedToHbase.mark(mutations.size());
 
                     }
-                    System.out.println("quan-debug: End for loop with HBaseApplierMutationGenerator" + bufferedMySQLTableName);
 
                 }
             } // next table
 
-            System.out.println("quan-debug: before timerContext");
 
             timerContext.stop();
 
@@ -163,15 +159,9 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
                 return new HBaseTaskResult(taskUuid, TaskStatus.WRITE_FAILED, false);
             }
 
-            System.out.println("quan-debug: end of Transaction");
-
         } // next transaction
 
-        System.out.println("quan-debug: before taskTimer stop");
-
         taskTimer.stop();
-
-        System.out.println("quan-debug: after taskTimer stop");
 
         if (DRY_RUN) {
             Thread.sleep(100);
@@ -182,18 +172,13 @@ public class HBaseWriterTask implements Callable<HBaseTaskResult> {
             );
         }
 
-        System.out.println("quan-debug: No dryrun");
-
         // task result
-        HBaseTaskResult test = new HBaseTaskResult(
+        return new HBaseTaskResult(
                 taskUuid,
                 TaskStatus.WRITE_SUCCEEDED,
                 true
         );
 
-        System.out.println("quan-debug: have variable test");
-
-        return test;
     }
 
     private static class PerTableMetrics {

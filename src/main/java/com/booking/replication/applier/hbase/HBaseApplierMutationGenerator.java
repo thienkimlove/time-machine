@@ -233,7 +233,7 @@ public class HBaseApplierMutationGenerator {
         String hbaseRowID = getHBaseRowKey(row);
 
         if (hbaseRowID == null) {
-            hbaseRowID = "un_defined" + timestampMicroSec;
+            hbaseRowID = "undefined" + timestampMicroSec;
         }
 
         // String  replicantSchema   = configuration.getReplicantSchemaName().toLowerCase();
@@ -389,10 +389,7 @@ public class HBaseApplierMutationGenerator {
             hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
             return hbaseRowID;
         } catch (Exception e) {
-            LOGGER.info("Error with pkColumnValues :" + pkColumnValues);
-            LOGGER.info("Error with pkColumnNames :" + pkColumnNames);
-            LOGGER.info("Error with row :" + row.toJson());
-            LOGGER.info(e.getMessage());
+            LOGGER.info("quan-debug: No PrimaryKeyColumns" + row.toJson());
             return null;
         }
     }

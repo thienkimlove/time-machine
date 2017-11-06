@@ -501,11 +501,12 @@ Dum Mysql from master
 ```bash
 mysqldump --skip-lock-tables -uroot -ptieungao --single-transaction --flush-logs --hex-blob --master-data=2 live_warehouse_v2 > /tmp/slave.sql
 head slave.sql -n80 | grep "MASTER_LOG_POS"
+- CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000004', MASTER_LOG_POS=154;
 #remember this information
 #CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000002', MASTER_LOG_POS=154;
 scp /tmp/slave.sql quan-dev@103.21.150.80:/tmp
 
-CHANGE MASTER TO MASTER_HOST='103.21.150.81',MASTER_USER='replicant',MASTER_PASSWORD='pw_replicant_slave', MASTER_LOG_FILE='mysql-bin.000002', MASTER_LOG_POS=154;
+CHANGE MASTER TO MASTER_HOST='103.21.150.81',MASTER_USER='replicant',MASTER_PASSWORD='pw_replicant_slave', MASTER_LOG_FILE='mysql-bin.000004', MASTER_LOG_POS=154;
 START SLAVE;
 #https://plusbryan.com/mysql-replication-without-downtime
 SHOW SLAVE STATUS;
@@ -514,6 +515,12 @@ Query OK, 0 rows affected, 1 warning (0.00 sec)
 
 mysql> FLUSH PRIVILEGES;
 Query OK, 0 rows affected (0.00 sec)
+
+Drop all HBase tables;
+
+disable_all '.*'
+drop_all '.*'
+
 ```
 
 #### Re-install all Hadoop Software by login to hadoop user.
@@ -720,11 +727,19 @@ Mysql Drop Contraint
 ```sql
 ALTER TABLE conversation_tags
 DROP FOREIGN KEY 'conversation_tags_ibfk_1';
+
+
 ```
 
 So we have 3 problems when import database to HBase
 
 1. error on contrain key name  = key name in mysql table (Must remove it)
+
+```sql
+
+SELECT concat('ALTER TABLE ', '`live_warehouse_v2`.`', TABLE_NAME, '`', ' DROP FOREIGN KEY ', '`', CONSTRAINT_NAME, '`', ';')  FROM information_schema.TABLE_CONSTRAINTS where TABLE_SCHEMA = 'live_warehouse_v2' and CONSTRAINT_TYPE = 'FOREIGN KEY'
+
+```
 
 2. 2 table `checksums` and `task_result` have problem with 
 

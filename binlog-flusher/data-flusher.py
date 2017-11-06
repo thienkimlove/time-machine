@@ -426,7 +426,7 @@ class DataFlusher(object):
 @click.option('--table', required=False, help='comma separated list of tables to copy. Leave blank for all tables')
 @click.option('--method', default='BlackholeCopy', help='Copy method class')
 @click.option('--stop-slave/--no-stop-slave', default=True, help='stop the replication thread whilst running the copy')
-@click.option('--start-slave/--no-start-slave', default=True, help='restart the replication thread after running the copy')
+@click.option('--start-slave/--no-start-slave', default=False, help='restart the replication thread after running the copy')
 @click.option('--skip', required=False, help='comma separated list of skip schemas')
 def run(user, passwd, host, port, db, table, method, stop_slave, start_slave, skip):
     flusher = DataFlusher()
@@ -473,7 +473,7 @@ if __name__ == '__main__':
     logger = logging.getLogger('dataFlusher')
     curTime = datetime.now().strftime("%Y-%m-%d-%H-%M")
     hdlr = logging.FileHandler('tmp/dataFlusher-%s.log' % curTime)
-    hashmapFileName = 'tmp/flusherHash-%s.txt' % curTime
+    hashmapFileName = 'tmp/flusherHash-%s' % curTime
     formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
     hdlr.setFormatter(formatter)
     logger.addHandler(hdlr)

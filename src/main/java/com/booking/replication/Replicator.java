@@ -368,7 +368,6 @@ public class Replicator {
         while (!pipelineOrchestrator.isReplicatorShutdownRequested()) {
             try {
                 Thread.sleep(1000);
-                //LOGGER.info("quan-debug:Sleep");
             } catch (InterruptedException ie) {
                 LOGGER.error("Main thread interrupted with: ", ie);
                 pipelineOrchestrator.requestReplicatorShutdown();

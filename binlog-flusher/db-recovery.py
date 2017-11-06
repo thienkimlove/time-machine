@@ -89,7 +89,7 @@ def get_tables(config):
 @click.option('--db', required=False, help='comma separated list of databases to copy. Leave blank for all databases')
 @click.option('--table', required=False, help='comma separated list of tables to copy. Leave blank for all tables')
 @click.option('--stop-slave/--no-stop-slave', default=True, help='stop the replication thread whilst running the copy')
-@click.option('--start-slave/--no-start-slave', default=False, help='restart the replication thread after running the copy')
+@click.option('--start-slave/--no-start-slave', default=True, help='restart the replication thread after running the copy')
 @click.option('--method', default='BlackholeCopy', help='Copy method class')
 @click.option('--host', help='Host name')
 @click.option('--hashfile', help='Hashmap file name')
