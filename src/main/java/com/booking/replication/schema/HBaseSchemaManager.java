@@ -172,13 +172,11 @@ public class HBaseSchemaManager {
         }
 
         // get pre/post schemas
-        //String preChangeTablesSchemaJson  = event.getPreTransitionSchemaSnapshot().getSchemaVersionTablesJsonSnaphot();
-        //String postChangeTablesSchemaJson = event.getPostTransitionSchemaSnapshot().getSchemaVersionTablesJsonSnaphot();
+        String preChangeTablesSchemaJson  = event.getPreTransitionSchemaSnapshot().getSchemaVersionTablesJsonSnaphot();
+        String postChangeTablesSchemaJson = event.getPostTransitionSchemaSnapshot().getSchemaVersionTablesJsonSnaphot();
 
-        //Fix by quan_dm to get real schema instead of only columnNames  
-        String preChangeTablesSchemaJson  = event.getPreTransitionSchemaSnapshot().getSchemaVersionJsonSnaphot();
-        String postChangeTablesSchemaJson = event.getPostTransitionSchemaSnapshot().getSchemaVersionJsonSnaphot();
-
+        LOGGER.debug("quan:dm" + event.getPreTransitionSchemaSnapshot());
+        LOGGER.debug("quan:dm" + event.getPostTransitionSchemaSnapshot());
 
 
         String schemaTransitionSequenceJson = JsonBuilder.schemaTransitionSequenceToJson(
