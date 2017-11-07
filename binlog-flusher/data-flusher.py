@@ -171,6 +171,7 @@ class BlackholeCopyMethod(object):
         self.hashRep[table_name] = hash_table_name
 
     def execute_sql(self, cursor, sql):
+        cursor.execute("SET sql_mode = 'ALLOW_INVALID_DATES'")
         logger.info(sql)
         return cursor.execute(sql)
 

@@ -716,6 +716,12 @@ Running in Server
 ### when work with database and using binlog flusher
 
 ```uastcontextlanguage
+
+Drop all HBase tables;
+
+disable_all '.*'
+drop_all '.*'
+
 python data-flusher.py --host=localhost --user=root --passwd=tieungao --port=3306 --db=live_warehouse_v2
 
 python db-recovery.py --mycnf /etc/mysql/my.cnf \
@@ -749,15 +755,21 @@ This because of `binlog_do_db` in MySQL Configuration as
 current fix by generate `hBaseRowId` 
 
 ```uastcontextlanguage
+ try {
+    String hbaseRowID = Joiner.on(";").join(pkColumnValues);
+    String saltingPartOfKey = pkColumnValues.get(0);
 
- Long columnTimestampforRowKey = row.getEventV4Header().getTimestamp();
-        // RowID
-        String hbaseRowID = getHBaseRowKey(row);
-
-        if (hbaseRowID == null) {
-            hbaseRowID = "undefined" + columnTimestampforRowKey;
-        }
-
+    // avoid region hot-spotting
+    hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
+    return hbaseRowID;
+} catch (Exception e) {
+    //LOGGER.info("quan-debug: No PrimaryKeyColumns" + row.toJson());
+    String hbaseRowID = UUID.randomUUID().toString();
+    String saltingPartOfKey = "undefined";
+    // avoid region hot-spotting
+    hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
+    return hbaseRowID;
+}
 ```
 
 * Problem with Invalid default datetime for `timestamp` column.
@@ -775,3 +787,29 @@ setSqlMode.execute("SET sql_mode = 'ALLOW_INVALID_DATES';");
 
 
 Next we must continue with `git@github.com:mysql-time-machine/hbase-snapshotter.git`
+
+#### Must work with Sbt most time
+
+In `build.st` we must using `sbt 0.13.16` because latest `sbt 1.0.0` not have support all libraries.
+
+But because we submitted to `Spark 2.1.0` then Apache Spark Logging library is not existed.
+
+We must manually download and put in `lib` directory
+
+```uastcontextlanguage
+
+sbt update
+sbt assemblly
+
+https://stackoverflow.com/questions/38893655/spark-twitter-streaming-exception-org-apache-spark-logging-classnotfound/39194820#39194820
+
+```
+
+*  Note about Spark install `/usr/local/lib/spark`, 
+
+```uastcontextlanguage
+- Must coppy /usr/local/hive/conf/hive-site.xml to /usr/local/lib/spark/conf
+- Must edit spark-env.sh and spark-default.conf
+- Test spark submit with spark-submit --master local  /code/spark/read.py
+```
+
