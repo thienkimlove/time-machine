@@ -172,9 +172,8 @@ public class HBaseSchemaManager {
         }
 
         // get pre/post schemas
-        //String preChangeTablesSchemaJson  = event.getPreTransitionSchemaSnapshot().getSchemaVersionTablesJsonSnaphot();
-        String preChangeTablesSchemaJson  = event.getPreTransitionSchemaSnapshot().getSchemaVersionJsonSnaphot();
-        String postChangeTablesSchemaJson = event.getPostTransitionSchemaSnapshot().getSchemaVersionJsonSnaphot();
+        String preChangeTablesSchemaJson  = event.getPreTransitionSchemaSnapshot().getSchemaVersionTablesJsonSnaphot();
+        String postChangeTablesSchemaJson = event.getPostTransitionSchemaSnapshot().getSchemaVersionTablesJsonSnaphot();
 
 
         String schemaTransitionSequenceJson = JsonBuilder.schemaTransitionSequenceToJson(
