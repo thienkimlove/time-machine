@@ -812,4 +812,34 @@ https://stackoverflow.com/questions/38893655/spark-twitter-streaming-exception-o
 - Must edit spark-env.sh and spark-default.conf
 - Test spark submit with spark-submit --master local  /code/spark/read.py
 ```
+### Important note with Spark and hive.
 
+```uastcontextlanguage
+- Finally i must install hive 1.2.1 instead of 2.1.1 because dont know why 
+
+but Spark 2.1.0 only using hive 1.2.1 metastore client.
+
+- I user mysql to store metastoreDB of Hive.
+
+- i need to create link for hive-site.xml in /usr/local/lib/spark/conf 
+
+- Setting for Spark in spark-default.conf
+
+spark.eventLog.enabled           true
+spark.eventLog.dir               /tmp
+spark.driver.memory              5g
+spark.master                     spark://Hadoop-NameNode-01:7077
+spark.driver.host		         Hadoop-NameNode-01
+spark.serializer                 org.apache.spark.serializer.KryoSerializer
+spark.yarn.jars                 /usr/local/lib/spark/jars/*,/usr/local/lib/spark/yarn/*
+spark.sql.warehouse.dir          hdfs://localhost:9000/user/hive/warehouse
+
+#start hiveserver2 so hue can using it.
+
+/tmp/hive$ nohup hiveserver2 &
+
+#install hive server using mysql as metastoredb
+
+http://hive.praveendeshmane.co.in/hive/hive-2-1-0-installation-with-mysql-database-on-ubuntu-14-04.jsp
+
+```
