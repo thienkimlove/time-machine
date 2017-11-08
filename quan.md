@@ -722,6 +722,12 @@ Drop all HBase tables;
 disable_all '.*'
 drop_all '.*'
 
+Hbase query in browser
+
+To get employee 1 Personal details the query will be ” emp1[Personal Data: ]
+To get employee 1 Personal and Professiona details the query will be  “emp1[Personal Data: , Professional Data: ]
+To get employee1 name, the query will be “emp1[Personal Data: Name ].
+
 python data-flusher.py --host=localhost --user=root --passwd=tieungao --port=3306 --db=live_warehouse_v2
 
 python db-recovery.py --mycnf /etc/mysql/my.cnf \

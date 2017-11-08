@@ -16,7 +16,7 @@ hbase:
     namespace: 'hh'
     zookeeper_quorum:  ['localhost']
     hive_imports:
-        tables: ['hh_delta']
+        tables: ['stocks']
 
 mysql_failover:
      pgtid:

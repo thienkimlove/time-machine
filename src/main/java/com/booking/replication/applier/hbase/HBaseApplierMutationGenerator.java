@@ -355,6 +355,7 @@ public class HBaseApplierMutationGenerator {
         List<String> pkColumnNames  = row.getPrimaryKeyColumns();
         List<String> pkColumnValues = new ArrayList<>();
 
+
         for (String pkColumnName : pkColumnNames) {
 
             Map<String, String> pkCell = row.getEventColumns().get(pkColumnName);
@@ -374,21 +375,12 @@ public class HBaseApplierMutationGenerator {
             }
         }
 
-        try {
-            String hbaseRowID = Joiner.on(";").join(pkColumnValues);
-            String saltingPartOfKey = pkColumnValues.get(0);
-
-            // avoid region hot-spotting
-            hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
-            return hbaseRowID;
-        } catch (Exception e) {
-            //LOGGER.info("quan-debug: No PrimaryKeyColumns" + row.toJson());
-            String hbaseRowID = UUID.randomUUID().toString();
-            String saltingPartOfKey = "undefined";
-            // avoid region hot-spotting
-            hbaseRowID = saltRowKey(hbaseRowID, saltingPartOfKey);
-            return hbaseRowID;
+        if (pkColumnValues.isEmpty()) {
+           return UUID.randomUUID().toString();
+        } else {
+            return pkColumnValues.get(0);
         }
+
     }
 
     /**
