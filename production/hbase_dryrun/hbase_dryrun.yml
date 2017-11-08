@@ -10,7 +10,7 @@ metadata_store:
     host:     'localhost'
     database: 'hh_stores'
     file:
-       path: '/tmp/hh_meta.txt'
+       path: '/opt/hadoop_store/time_machine_meta/store.txt'
 
 hbase:
     namespace: 'hh'
