@@ -58,8 +58,8 @@ public class ColumnSchema {
         this.dataType = dataType;
     }
 
-    public int getCharacterMaximumLength() {
-        return characterMaximumLength;
+    public String getCharacterMaximumLength() {
+        return Integer.toString(this.characterMaximumLength);
     }
 
     public void setCharacterMaximumLength(int characterMaximumLength) {
@@ -97,4 +97,6 @@ public class ColumnSchema {
     public void setColumnType(String columnType) {
         this.columnType = columnType;
     }
+    
+    public String getIsNullAble() { return this.isNullable ? "1" : "0"; }
 }

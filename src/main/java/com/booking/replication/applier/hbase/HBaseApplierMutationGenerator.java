@@ -355,7 +355,6 @@ public class HBaseApplierMutationGenerator {
         List<String> pkColumnNames  = row.getPrimaryKeyColumns();
         List<String> pkColumnValues = new ArrayList<>();
 
-
         for (String pkColumnName : pkColumnNames) {
 
             Map<String, String> pkCell = row.getEventColumns().get(pkColumnName);
@@ -375,8 +374,36 @@ public class HBaseApplierMutationGenerator {
             }
         }
 
+
+
+
         if (pkColumnValues.isEmpty()) {
-           return UUID.randomUUID().toString();
+
+            List<String> indexColumnValues = new ArrayList<>();
+
+            for (String indexColumnName : row.getindexKeyColumns()) {
+
+                Map<String, String> indexCell = row.getEventColumns().get(indexColumnName);
+
+                switch (row.getEventType()) {
+                    case "INSERT":
+                    case "DELETE":
+                        indexColumnValues.add(indexCell.get("value"));
+                        break;
+                    case "UPDATE":
+                        indexColumnValues.add(indexCell.get("value_after"));
+                        break;
+                    default:
+                        LOGGER.error("Wrong event type. Expected RowType event.");
+                        // TODO: throw WrongEventTypeException
+                        break;
+                }
+            }
+            if (indexColumnValues.isEmpty()) {
+                return UUID.randomUUID().toString();
+            } else {
+                return Joiner.on("_").join(indexColumnValues);
+            }
         } else {
             return pkColumnValues.get(0);
         }

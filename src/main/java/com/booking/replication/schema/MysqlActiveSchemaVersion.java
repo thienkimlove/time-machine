@@ -10,10 +10,15 @@ import com.booking.replication.schema.table.TableSchemaVersion;
 import com.booking.replication.util.CaseInsensitiveMap;
 import com.booking.replication.util.JsonBuilder;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.net.URISyntaxException;
 
 import java.sql.Connection;
@@ -166,29 +171,25 @@ public class MysqlActiveSchemaVersion implements ActiveSchemaVersion {
 
         ResultSet getTableInfoResultSet = getTableInfoStatement.executeQuery();
 
+
         while (getTableInfoResultSet.next()) {
 
             ColumnSchema columnSchema;
 
             if (getTableInfoResultSet.getString("DATA_TYPE").equals("enum")) {
                 columnSchema = new EnumColumnSchema(getTableInfoResultSet);
-                this.activeSchemaTables.get(tableName).addColumn(columnSchema);
             } else if (getTableInfoResultSet.getString("DATA_TYPE").equals("set")) {
                 columnSchema = new SetColumnSchema(getTableInfoResultSet);
-                this.activeSchemaTables.get(tableName).addColumn(columnSchema);
             } else {
-                try {
-                    columnSchema = new ColumnSchema(getTableInfoResultSet);
-                    this.activeSchemaTables.get(tableName).addColumn(columnSchema);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("ERROR: could not getInt " + getTableInfoResultSet);
-                }
-
+                columnSchema = new ColumnSchema(getTableInfoResultSet);
             }
+            this.activeSchemaTables.get(tableName).addColumn(columnSchema);
         }
+
         getTableInfoResultSet.close();
         getTableInfoStatement.close();
+
+
     }
 
     @Override

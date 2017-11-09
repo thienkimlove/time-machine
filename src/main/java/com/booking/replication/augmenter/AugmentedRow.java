@@ -41,6 +41,7 @@ public class AugmentedRow {
     private long         rowBinlogEventOrdinal;
     private String       tableName;
     private List<String> primaryKeyColumns = new ArrayList<>();
+    private List<String> indexKeyColumns = new ArrayList<>();
 
     private String       rowUUID;
     private String       rowBinlogPositionID;
@@ -197,6 +198,7 @@ public class AugmentedRow {
             throw new TableMapException("Need table schem in order to generate PK list.");
         } else {
             Map<Integer, String> pkColumns = new HashMap<>();
+            Map<Integer, String> indexColumns = new HashMap<>();
 
             Set<String> columnNames = tableSchemaVersion.getColumnNames();
             for (String columnName: columnNames) {
@@ -210,12 +212,20 @@ public class AugmentedRow {
                 if ((ck != null) && (ck.equals("PRI"))) {
                     pkColumns.put(op, cn);
                 }
+
+                if ((ck != null) && (ck.equals("MUL"))) {
+                    indexColumns.put(op, cn);
+                }
             }
 
             TreeMap<Integer,String> pkColumnSortedByOP = new TreeMap<>();
             pkColumnSortedByOP.putAll(pkColumns);
-
             primaryKeyColumns.addAll(pkColumnSortedByOP.values());
+
+
+            TreeMap<Integer,String> indexColumnSortedByOP = new TreeMap<>();
+            indexColumnSortedByOP.putAll(indexColumns);
+            indexKeyColumns.addAll(indexColumnSortedByOP.values());
         }
     }
 
@@ -249,6 +259,10 @@ public class AugmentedRow {
 
     public List<String> getPrimaryKeyColumns() {
         return primaryKeyColumns;
+    }
+
+    public List<String> getindexKeyColumns() {
+        return indexKeyColumns;
     }
 
     public String getBinlogFileName() {
