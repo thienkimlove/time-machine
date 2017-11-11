@@ -30,8 +30,14 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import static com.codahale.metrics.MetricRegistry.name;
@@ -272,6 +278,7 @@ public class PipelineOrchestrator extends Thread {
                     replicantPool.getReplicantDBActiveHostServerID(), EventPosition.getEventBinlogFileName(event),
                     EventPosition.getEventBinlogPosition(event), fakeMicrosecondCounter);
             pipelinePosition.setCurrentPosition(currentPosition);
+
 
             processEvent(event);
 

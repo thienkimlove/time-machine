@@ -140,6 +140,7 @@ public class EventAugmenter {
 
         AugmentedRowsEvent au;
 
+
         switch (event.getHeader().getEventType()) {
 
             case MySQLConstants.UPDATE_ROWS_EVENT:

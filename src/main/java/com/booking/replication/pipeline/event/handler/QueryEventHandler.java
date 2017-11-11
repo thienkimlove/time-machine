@@ -55,7 +55,7 @@ public class QueryEventHandler implements BinlogEventV4Handler {
         final QueryEvent event = (QueryEvent) binlogEventV4;
         String querySQL = event.getSql().toString();
         QueryEventType queryEventType = QueryInspector.getQueryEventType(event);
-        LOGGER.debug("Applying event: " + event + ", type: " + queryEventType);
+        LOGGER.debug("Applying event: " + event + ", type: " + queryEventType + " quan-debug:"+ event.getHeader().getTimestamp());
 
         switch (queryEventType) {
             case COMMIT:

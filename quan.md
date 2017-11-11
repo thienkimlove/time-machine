@@ -68,7 +68,7 @@ docker exec -ti slavedb 'mysql' -uroot -ptieungao -e"SHOW SLAVE STATUS" -vvv
 
 We must using 
 
-```text
+```
 
 CREATE TABLE `products`.`users` (
   `remember_token` text,
@@ -224,7 +224,7 @@ java -jar ../../target/mysql-replicator-0.14.2.jar \
 
 -  Mysql Configuration as below :
 
-```text
+```
 [mysqld]
 server_id = 99999
 # Binlog configuration
@@ -238,7 +238,7 @@ max_binlog_size  = 100M
 
 - Create heatbeat database on meta-store-database
 
-```text
+```
 CREATE TABLE IF NOT EXISTS db_heartbeat (
     server_id int unsigned NOT NULL,
     csec bigint unsigned DEFAULT NULL,
@@ -316,7 +316,7 @@ java -jar ../../target/mysql-replicator-0.14.2.jar \
 ```
 - SQL for Create tables and insert row
 
-```text
+```
 CREATE TABLE `products`.`users` (
   `remember_token` text,
   `name` text,
@@ -356,7 +356,7 @@ Read `cat nohup.out` for details.
 
 When create new tables, we must using `CREATE Database.TableName` without ```. Please check 
 
-```text
+```
 LOGGER.warn("No Db name in Query Event. Extracted SQL: " + ((QueryEvent) event).getSql().toString());
 ```
 
@@ -427,7 +427,7 @@ build/env/bin/supervisor
 
 #### Deep on Replication code
 
-```text
+```
 // COMMIT does not always contain database name so we get it
 // from current transaction metadata.
 // There is an assumption that all tables in the transaction
@@ -437,7 +437,7 @@ build/env/bin/supervisor
 
 1. Start setup on MasterDB
 
-```uastcontextlanguage
+```
 server-id		= 1
 # in /var/lib/mysql/mysql-bin.xxx
 log_bin			= mysql-bin
@@ -482,7 +482,7 @@ service mysql stop
 
 Edit Mysql Configuration 
 
-```uastcontextlanguage
+```
 
 server-id               = 101
 binlog-format           = ROW
@@ -498,7 +498,7 @@ binlog_do_db            = live_warehouse_v2
 
 Dum Mysql from master
 
-```uastcontextlanguage
+```
 mysqldump --skip-lock-tables -uroot -ptieungao --single-transaction --flush-logs --hex-blob --master-data=2 live_warehouse_v2 > /tmp/slave.sql
 head slave.sql -n80 | grep "MASTER_LOG_POS"
 - CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000004', MASTER_LOG_POS=154;
@@ -516,6 +516,8 @@ Query OK, 0 rows affected, 1 warning (0.00 sec)
 mysql> FLUSH PRIVILEGES;
 Query OK, 0 rows affected (0.00 sec)
 
+mysql -uroot -ptieungao live_warehouse_v2 < live_warehouse_v2_2017_11_05130001.sql
+
 Drop all HBase tables;
 
 disable_all '.*'
@@ -528,7 +530,7 @@ drop_all '.*'
 
 1. Hadoop (`http://www.bogotobogo.com/Hadoop/BigData_hadoop_Install_on_ubuntu_16_04_single_node_cluster.php`)
 
-```uastcontextlanguage
+```
 wget http://mirror.downloadvn.com/apache/hadoop/common/hadoop-2.8.1/hadoop-2.8.1.tar.gz
 sudo ln -s /opt/hadoop-2.8.1 /usr/local/hadoop
 vim /usr/local/hadoop/etc/hadoop/hadoop-env.sh
@@ -616,7 +618,7 @@ http://103.21.150.80:50070
 
 2. Install Hive (`https://hadoop7.wordpress.com/2017/01/27/installing-hive-on-ubuntu-16-04/`)
 
-```uastcontextlanguage
+```
 wget http://mirror.downloadvn.com/apache/hive/stable-2/apache-hive-2.1.1-bin.tar.gz
 sudo ln -s /opt/apache-hive-2.1.1-bin /usr/local/hive
 hdfs dfs -mkdir -p /user/hive/warehouse
@@ -652,7 +654,7 @@ sudo ln -s /opt/oozie-4.3.0/distro/target/oozie-4.3.0-distro/oozie-4.3.0 /usr/lo
 ```
 Put in `~/.bashrc` :
 
-```text
+```
 export OOZIE_VERSION=4.3.0
 export OOZIE_HOME=/usr/local/oozie
 export PATH=$PATH:$OOZIE_HOME/bin
@@ -673,7 +675,7 @@ cp share/hadoop/common/*.jar /usr/local/sqoop/server/lib/ && cp share/hadoop/com
 
 Install Sqoop2 :
 
-```text
+```
 Install sqoop 2 tutorial 
 http://cleverowl.uk/2015/08/07/importing-data-from-oracle-rdbms-into-hadoop-using-apache-sqoop-2/
 
@@ -715,7 +717,7 @@ Running in Server
 
 ### when work with database and using binlog flusher
 
-```uastcontextlanguage
+```
 
 Drop all HBase tables;
 
@@ -740,7 +742,7 @@ python db-recovery.py --mycnf /etc/mysql/my.cnf \
 
 * Error on constraint key duplicate in MyQql table (We fix by remove all constraint keys)
 
-```uastcontextlanguage
+```
 SELECT concat('ALTER TABLE ', '`live_warehouse_v2`.`', TABLE_NAME, '`', ' DROP FOREIGN KEY ', '`', CONSTRAINT_NAME, '`', ';')  
 FROM information_schema.TABLE_CONSTRAINTS 
 where TABLE_SCHEMA = 'live_warehouse_v2' 
@@ -760,7 +762,7 @@ This because of `binlog_do_db` in MySQL Configuration as
 
 current fix by generate `hBaseRowId` 
 
-```uastcontextlanguage
+```
  try {
     String hbaseRowID = Joiner.on(";").join(pkColumnValues);
     String saltingPartOfKey = pkColumnValues.get(0);
@@ -780,7 +782,7 @@ current fix by generate `hBaseRowId`
 
 * Problem with Invalid default datetime for `timestamp` column.
 
-```uastcontextlanguage
+```
 
 #add in MysqlActiveSchemaVersion
 
@@ -802,7 +804,7 @@ But because we submitted to `Spark 2.1.0` then Apache Spark Logging library is n
 
 We must manually download and put in `lib` directory
 
-```uastcontextlanguage
+```
 
 sbt update
 sbt assemblly
@@ -813,14 +815,14 @@ https://stackoverflow.com/questions/38893655/spark-twitter-streaming-exception-o
 
 *  Note about Spark install `/usr/local/lib/spark`, 
 
-```uastcontextlanguage
+```
 - Must coppy /usr/local/hive/conf/hive-site.xml to /usr/local/lib/spark/conf
 - Must edit spark-env.sh and spark-default.conf
 - Test spark submit with spark-submit --master local  /code/spark/read.py
 ```
 ### Important note with Spark and hive.
 
-```uastcontextlanguage
+```
 - Finally i must install hive 1.2.1 instead of 2.1.1 because dont know why 
 
 but Spark 2.1.0 only using hive 1.2.1 metastore client.

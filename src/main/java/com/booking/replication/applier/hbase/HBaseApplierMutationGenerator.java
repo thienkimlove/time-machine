@@ -17,6 +17,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -148,32 +149,21 @@ public class HBaseApplierMutationGenerator {
                 // Only write values that have changed
 
                 Long columnTimestamp = row.getEventV4Header().getTimestamp();
-                String columnValue;
 
                 for (String columnName : row.getEventColumns().keySet()) {
 
-                    String valueBefore = row.getEventColumns().get(columnName).get("value_before");
-                    String valueAfter = row.getEventColumns().get(columnName).get("value_after");
+                    String columnValue = row.getEventColumns().get(columnName).get("value_after");
 
-                    if ((valueAfter == null) && (valueBefore == null)) {
-                        // no change, skip;
-                    } else if (
-                            ((valueBefore == null) && (valueAfter != null))
-                                    ||
-                                    ((valueBefore != null) && (valueAfter == null))
-                                    ||
-                                    (!valueAfter.equals(valueBefore))) {
-
-                        columnValue = valueAfter;
-                        put.addColumn(
-                                CF,
-                                Bytes.toBytes(columnName),
-                                columnTimestamp,
-                                Bytes.toBytes(columnValue)
-                        );
-                    } else {
-                        // no change, skip
+                    if (columnValue == null) {
+                        columnValue = "NULL";
                     }
+
+                    put.addColumn(
+                            CF,
+                            Bytes.toBytes(columnName),
+                            columnTimestamp,
+                            Bytes.toBytes(columnValue)
+                    );
                 }
 
                 put.addColumn(

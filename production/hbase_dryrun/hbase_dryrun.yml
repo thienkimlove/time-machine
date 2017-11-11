@@ -8,12 +8,12 @@ metadata_store:
     username: 'root'
     password: 'tieungao'
     host:     'localhost'
-    database: 'hh_stores'
+    database: 'prod_stores'
     file:
        path: '/opt/hadoop_store/time_machine_meta/store.txt'
 
 hbase:
-    namespace: 'hh'
+    namespace: 'prod'
     zookeeper_quorum:  ['localhost']
     hive_imports:
         tables: ['stocks']
